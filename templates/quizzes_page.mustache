@@ -24,7 +24,7 @@
 <div class="mygama-course-board">
     <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>
 
-    {{> local_edqscore/toolbar }}
+    {{#toolbar}}{{> local_edqscore/toolbar }}{{/toolbar}}
 
     {{#scopenone}}
     <div class="alert alert-warning">{{scopenonemessage}}</div>

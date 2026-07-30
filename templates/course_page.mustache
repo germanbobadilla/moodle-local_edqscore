@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    {{> local_edqscore/toolbar }}
+    {{#toolbar}}{{> local_edqscore/toolbar }}{{/toolbar}}
 
     {{#scopenone}}
     <div class="alert alert-warning">{{scopenonemessage}}</div>
