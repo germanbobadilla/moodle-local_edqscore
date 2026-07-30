@@ -1,0 +1,51 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_edqscore/toolbar
+
+    Scope label, group filter dropdown and the course-settings link, shown
+    at the top of every board page.
+
+    Context variables required for this template:
+    * scopelabel, studentcount, studentslabel - who's in scope
+    * pageurl, courseid - group-filter form target
+    * hasgroups, groups, allgroupsselected, allgroupslabel, selectgrouplabel, golabel
+    * cansettings, settingsurl, coursesettingslabel
+}}
+<div class="mygama-toolbar">
+    <div class="mygama-toolbar-info">
+        <strong>{{scopelabel}}</strong>
+        &middot; {{studentcount}} {{studentslabel}}
+    </div>
+    <div class="mygama-toolbar-actions">
+        {{#hasgroups}}
+        <form method="get" action="{{pageurl}}">
+            <input type="hidden" name="id" value="{{courseid}}">
+            <select name="groupid" class="mygama-group-select" onchange="this.form.submit()" aria-label="{{selectgrouplabel}}">
+                <option value="0" {{#allgroupsselected}}selected{{/allgroupsselected}}>{{allgroupslabel}}</option>
+                {{#groups}}
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+                {{/groups}}
+            </select>
+            <noscript><button type="submit" class="btn btn-sm btn-outline-secondary">{{golabel}}</button></noscript>
+        </form>
+        {{/hasgroups}}
+        {{#cansettings}}
+        <a class="btn btn-outline-secondary btn-sm" href="{{settingsurl}}">{{coursesettingslabel}}</a>
+        {{/cansettings}}
+    </div>
+</div>

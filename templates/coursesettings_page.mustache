@@ -1,0 +1,86 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_edqscore/coursesettings_page
+
+    Per-course override form: four collapsible sections, each holding a mix
+    of plain number inputs and rich combo-select dropdowns. See
+    amd/src/coursesettings.js for the expand-all and only-show-submitted
+    toggle behaviour, and local_edqscore/combo_select for the dropdown
+    widget's own behaviour.
+}}
+<div class="mygama-course-settings">
+    <p><a href="{{backurl}}">&laquo; {{coursefullname}}</a></p>
+    <p>{{coursesettingsintro}}</p>
+
+    <p>
+        <button type="button" id="mygama-expandall" class="btn btn-outline-secondary btn-sm">{{expandalllabel}}</button>
+    </p>
+
+    <form method="post" action="{{formurl}}" class="mygama-settings-form">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+        {{#sections}}
+        <div class="mygama-settings-section">
+            <button type="button" class="mygama-settings-sectionhead" data-bs-toggle="collapse"
+                data-bs-target="#{{id}}" aria-expanded="{{#expanded}}true{{/expanded}}{{^expanded}}false{{/expanded}}" aria-controls="{{id}}">
+                <i class="icon fa fa-chevron-down fa-fw mygama-inline-chevron" aria-hidden="true"></i>
+                <h3>{{title}}</h3>
+            </button>
+            <div class="collapse {{#expanded}}show{{/expanded}}" id="{{id}}">
+                <div class="mygama-settings-sectionbody">
+                    {{#fields}}
+                    <div class="mb-3">
+                        <label for="{{#isnumber}}{{name}}{{/isnumber}}{{#iscombo}}{{combo.name}}{{/iscombo}}" class="form-label">{{label}}</label>
+                        {{#isnumber}}
+                        <input type="number" min="1" step="1" class="form-control" style="max-width: 12rem;"
+                            id="{{name}}" name="{{name}}" value="{{value}}" placeholder="{{placeholder}}">
+                        <div class="form-text">{{desc}}</div>
+                        {{/isnumber}}
+                        {{#iscombo}}
+                        {{#combo}}{{> local_edqscore/combo_select }}{{/combo}}
+                        {{#hasnote}}
+                        <div class="mygama-alert mygama-alert-warning" id="{{noteid}}" style="{{^notevisible}}display:none;{{/notevisible}}">
+                            <i class="icon fa fa-triangle-exclamation fa-fw" aria-hidden="true"></i>
+                            <span>{{note}}</span>
+                        </div>
+                        {{/hasnote}}
+                        {{/iscombo}}
+                    </div>
+                    {{/fields}}
+                </div>
+            </div>
+        </div>
+        {{/sections}}
+
+        <button type="submit" class="btn btn-primary">{{savechangeslabel}}</button>
+    </form>
+</div>
+
+{{#js}}
+require(['local_edqscore/combo'], function(combo) {
+    combo.init();
+});
+require(['local_edqscore/coursesettings'], function(coursesettings) {
+    coursesettings.init(
+        {{#quote}}{{assigncountfromsitedefault}}{{/quote}},
+        {{#quote}}{{countfromsubmission}}{{/quote}},
+        {{#quote}}{{expandcollapsedata.expandlabel}}{{/quote}},
+        {{#quote}}{{expandcollapsedata.collapselabel}}{{/quote}}
+    );
+});
+{{/js}}

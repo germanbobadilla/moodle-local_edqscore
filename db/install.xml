@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/edqscore/db" VERSION="20260728" COMMENT="XMLDB file for Moodle local/edqscore">
+  <TABLES>
+    <TABLE NAME="local_edqscore_course_settings" COMMENT="Per-course overrides of the My GAMA grading-turnaround thresholds">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="forumgradinghours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default"/>
+        <FIELD NAME="assigngradinghours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default"/>
+        <FIELD NAME="showungraded" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0 = hide, 1 = show"/>
+        <FIELD NAME="assigncountfrom" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default"/>
+        <FIELD NAME="forumcountfrom" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default"/>
+        <FIELD NAME="onlyshowsubmitted" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0 = show everyone, 1 = only show submitted work. Forced to 0 when assigncountfrom is not 'submission'."/>
+        <FIELD NAME="quizgradinghours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default. Only applies to quizzes containing essay questions."/>
+        <FIELD NAME="quizcountfrom" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default"/>
+        <FIELD NAME="quizonlymanual" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0 = show all quizzes, 1 = only show quizzes with a manually-graded (essay) question"/>
+        <FIELD NAME="edqincludefeedback" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0/1 = exclude/include assignment feedback in the EdQ score"/>
+        <FIELD NAME="edqincludequizmanual" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0/1 = exclude/include manually graded quizzes in the EdQ score"/>
+        <FIELD NAME="assignlatehours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default. Hours past assigngradinghours before an assignment is 'Overdue' rather than merely 'Late'."/>
+        <FIELD NAME="forumlatehours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default. Hours past forumgradinghours before a forum item is 'Overdue' rather than merely 'Late'."/>
+        <FIELD NAME="quizlatehours" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default. Hours past quizgradinghours before a quiz is 'Overdue' rather than merely 'Late'."/>
+        <FIELD NAME="edqscoredigestenabled" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0 = never send the daily EdQ Score digest for this course, 1 = send it"/>
+        <FIELD NAME="submissiondigestenabled" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="NULL = use the site-wide default, 0 = never send the daily submission digest for this course, 1 = send it"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="courseid" TYPE="foreign-unique" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

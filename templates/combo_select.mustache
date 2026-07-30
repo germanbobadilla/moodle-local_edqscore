@@ -1,0 +1,52 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_edqscore/combo_select
+
+    A "rich" dropdown: a trigger button showing the current selection, which
+    opens a panel listing every option with its own description and a
+    checkmark for the selected one — backed by a plain <select> so the value
+    still posts like any other form field. See amd/src/combo.js.
+
+    Context variables required for this template:
+    * name - form field name, also used as the element id
+    * currentlabel - label of the currently selected option
+    * options - list of {value, label, desc, selected}
+}}
+<div class="mygama-combo" data-field="{{name}}">
+    <button type="button" class="mygama-combo-trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="mygama-combo-triggerlabel">{{currentlabel}}</span>
+        <i class="icon fa fa-chevron-down fa-xs" aria-hidden="true"></i>
+    </button>
+    <div class="mygama-combo-panel" role="listbox" hidden>
+        {{#options}}
+        <div class="mygama-combo-option {{#selected}}mygama-combo-option-selected{{/selected}}"
+             role="option" data-value="{{value}}" aria-selected="{{#selected}}true{{/selected}}{{^selected}}false{{/selected}}" tabindex="-1">
+            <span class="mygama-combo-check"><i class="icon fa fa-check fa-xs" aria-hidden="true"></i></span>
+            <span class="mygama-combo-optiontext">
+                <span class="mygama-combo-optionlabel">{{label}}</span>
+                {{#desc}}<span class="mygama-combo-optiondesc">{{desc}}</span>{{/desc}}
+            </span>
+        </div>
+        {{/options}}
+    </div>
+    <select name="{{name}}" id="{{name}}" class="mygama-combo-native" tabindex="-1" aria-hidden="true">
+        {{#options}}
+        <option value="{{value}}" {{#selected}}selected{{/selected}}>{{label}}</option>
+        {{/options}}
+    </select>
+</div>

@@ -1,0 +1,84 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_edqscore/edqmisses_page
+
+    "What's affecting your EdQ score": every individual item dragging the
+    EdQ ring below 100%, with a link straight to it.
+
+    Context variables required for this template:
+    * backurl, pluginname
+    * toolbar - see templates/toolbar.mustache
+    * scopenone, scopenonemessage
+    * edqmissestitle, edqdesc, edqlabel, edqscore, edqcolor
+    * misscount, hasmisses, misses - list of {item, url, student, reason, accent, status}
+    * allontimemessage
+}}
+<div class="mygama-course-board">
+    <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>
+
+    {{> local_edqscore/toolbar }}
+
+    {{#scopenone}}
+    <div class="alert alert-warning">{{scopenonemessage}}</div>
+    {{/scopenone}}
+
+    <div class="mygama-edq-card" style="margin-bottom: 1.25rem;">
+        <div>
+            <div class="mygama-edq-name">{{edqlabel}}: {{edqscore}}%</div>
+            <div class="mygama-edq-context">{{edqdesc}}</div>
+        </div>
+        <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, rgba(255,255,255,.18) 0)">
+            <div class="mygama-edq-ring-hole">
+                <span class="mygama-edq-value">{{edqscore}}%</span>
+                <span class="mygama-edq-caption">{{edqlabel}}</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mygama-section-title">
+        <i class="icon fa fa-list-check fa-fw" aria-hidden="true"></i>
+        {{edqmissestitle}}
+        <span class="mygama-section-count">({{misscount}})</span>
+    </h2>
+
+    {{^hasmisses}}
+    <div class="mygama-empty">
+        <i class="icon fa fa-check fa-fw" aria-hidden="true"></i>
+        {{allontimemessage}}
+    </div>
+    {{/hasmisses}}
+
+    {{#hasmisses}}
+    <ul class="mygama-misslist">
+        {{#misses}}
+        <li class="mygama-missitem">
+            <span class="mygama-missdot" style="background: {{accent}}"></span>
+            <div class="mygama-missbody">
+                <div class="mygama-missitemname">
+                    {{#url}}<a class="mygama-link" href="{{url}}">{{item}}</a>{{/url}}
+                    {{^url}}{{item}}{{/url}}
+                    {{#student}} &middot; {{student}}{{/student}}
+                    {{#status}}<span class="mygama-pill {{pillclass}}">{{label}}</span>{{/status}}
+                </div>
+                <div class="mygama-missreason">{{reason}}</div>
+            </div>
+        </li>
+        {{/misses}}
+    </ul>
+    {{/hasmisses}}
+</div>

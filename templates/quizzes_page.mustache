@@ -1,0 +1,154 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_edqscore/quizzes_page
+
+    Quizzes detail page: one expandable card per quiz, each with a
+    per-student detail table. Auto-graded and essay-containing quizzes show
+    different rings/chips/columns.
+}}
+<div class="mygama-course-board">
+    <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>
+
+    {{> local_edqscore/toolbar }}
+
+    {{#scopenone}}
+    <div class="alert alert-warning">{{scopenonemessage}}</div>
+    {{/scopenone}}
+
+    <h2 class="mygama-section-title">
+        <i class="icon fa fa-circle-question fa-fw" aria-hidden="true"></i>
+        {{sectiontitle}}
+        <span class="mygama-section-count">({{sectioncount}})</span>
+    </h2>
+
+    {{^hasquizzes}}
+    <div class="mygama-empty">
+        <i class="icon fa fa-info-circle fa-fw" aria-hidden="true"></i>
+        {{noactivitiesmessage}}
+    </div>
+    {{/hasquizzes}}
+
+    {{#quizzes}}
+    <div class="card mygama-item-card mb-2">
+        <div class="mygama-card-header" role="button" tabindex="0" data-bs-toggle="collapse"
+             data-bs-target="#{{collapseid}}" aria-expanded="false" aria-controls="{{collapseid}}">
+            <div class="mygama-card-main">
+                <span class="mygama-chevron"><i class="icon fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
+                <div>
+                    <div class="mygama-card-title">
+                        {{#url}}
+                        <a class="mygama-link" href="{{url}}" onclick="event.stopPropagation()">
+                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{name}}
+                        </a>
+                        {{/url}}
+                        {{^url}}{{name}}{{/url}}
+                        {{#hasessay}}<span class="mygama-pill mygama-pill-neutral">{{containsessaylabel}}</span>{{/hasessay}}
+                        {{^hasessay}}<span class="mygama-pill mygama-pill-neutral">{{autogradedlabel}}</span>{{/hasessay}}
+                    </div>
+                    <div class="mygama-card-sub">{{attemptslabel}}: {{attemptcount}}</div>
+                </div>
+            </div>
+            <div class="mygama-card-badges">
+                {{#hasessay}}
+                <div class="mygama-ring-wrap">
+                    <div class="mygama-ring" style="background: conic-gradient(#1E7A34 {{gradedpct}}%, #e9ecef 0)">
+                        <div class="mygama-ring-hole"><span class="mygama-ring-value">{{gradedpct}}%</span></div>
+                    </div>
+                    <div class="mygama-ring-caption">{{gradedlabel}}</div>
+                </div>
+                <div class="mygama-chipstack">
+                    <span class="mygama-chip mygama-chip-neutral">
+                        <i class="icon fa fa-star" aria-hidden="true"></i> {{avgscorelabel}}
+                        {{#avgscorepct}}{{avgscorepct}}{{/avgscorepct}}{{^avgscorepct}}&mdash;{{/avgscorepct}}
+                    </span>
+                    {{#hasoverdue}}
+                    <span class="mygama-chip mygama-chip-bad">
+                        <i class="icon fa fa-fire" aria-hidden="true"></i> {{overduecount}} {{overduechiplabel}}
+                    </span>
+                    {{/hasoverdue}}
+                    {{^hasoverdue}}
+                    <span class="mygama-chip mygama-chip-good">
+                        <i class="icon fa fa-check" aria-hidden="true"></i> {{allcaughtuplabel}}
+                    </span>
+                    {{/hasoverdue}}
+                </div>
+                {{/hasessay}}
+                {{^hasessay}}
+                <div class="mygama-ring-wrap">
+                    <div class="mygama-ring" style="background: conic-gradient(#FFC72C {{completedpct}}%, #e9ecef 0)">
+                        <div class="mygama-ring-hole"><span class="mygama-ring-value">{{completedpct}}%</span></div>
+                    </div>
+                    <div class="mygama-ring-caption">{{completedlabel}}</div>
+                </div>
+                <div class="mygama-chipstack">
+                    <span class="mygama-chip mygama-chip-neutral">
+                        <i class="icon fa fa-star" aria-hidden="true"></i> {{avgscorelabel}}
+                        {{#avgscorepct}}{{avgscorepct}}{{/avgscorepct}}{{^avgscorepct}}&mdash;{{/avgscorepct}}
+                    </span>
+                    <span class="mygama-chip mygama-chip-good"><i class="icon fa fa-robot" aria-hidden="true"></i> {{autogradedlabel}}</span>
+                </div>
+                {{/hasessay}}
+            </div>
+        </div>
+        <div class="collapse" id="{{collapseid}}">
+            <div class="mygama-card-detail table-responsive">
+                <table class="table table-sm table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>{{colstudent}}</th>
+                            <th>{{colattempts}}</th>
+                            <th>{{collastattempt}}</th>
+                            <th>{{colscore}}</th>
+                            <th>{{coloverridden}}</th>
+                            {{#hasessay}}
+                            <th>{{colgradedon}}</th>
+                            <th>{{coloverdue}}</th>
+                            {{/hasessay}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#noneinscope}}<tr><td colspan="{{colspan}}" class="text-muted">{{noneinscopemessage}}</td></tr>{{/noneinscope}}
+                        {{#students}}
+                        <tr>
+                            <td>
+                                {{#reviewurl}}<a class="mygama-link" href="{{reviewurl}}">{{studentname}}</a>{{/reviewurl}}
+                                {{^reviewurl}}{{studentname}}{{/reviewurl}}
+                            </td>
+                            <td>{{attemptcount}}</td>
+                            <td>{{#lastattempttime}}{{lastattempttime}}{{/lastattempttime}}{{^lastattempttime}}&mdash;{{/lastattempttime}}</td>
+                            <td>{{#scorepct}}{{scorepct}}{{/scorepct}}{{^scorepct}}&mdash;{{/scorepct}}</td>
+                            <td>
+                                {{#overridden}}<span class="mygama-pill mygama-pill-neutral">{{overriddenyeslabel}}</span>{{/overridden}}
+                                {{^overridden}}<span class="text-muted">{{overriddennolabel}}</span>{{/overridden}}
+                            </td>
+                            {{#hasessay}}
+                            <td>{{#gradedon}}{{gradedon}}{{/gradedon}}{{^gradedon}}&mdash;{{/gradedon}}</td>
+                            <td>
+                                {{#hasattempt}}<span class="mygama-pill {{status.pillclass}}">{{status.label}}</span>{{/hasattempt}}
+                                {{^hasattempt}}&mdash;{{/hasattempt}}
+                            </td>
+                            {{/hasessay}}
+                        </tr>
+                        {{/students}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{/quizzes}}
+</div>
