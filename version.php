@@ -26,13 +26,13 @@
  * 8.1 (5.0 requires 8.2, 5.2 requires 8.3 — all satisfied by 8.1-safe code).
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026073003;
+$plugin->version   = 2026073101;
 $plugin->requires  = 2024100700;
 $plugin->component = 'local_edqscore';
 $plugin->maturity  = MATURITY_ALPHA;

@@ -22,7 +22,7 @@ namespace local_edqscore\output;
  * number inputs and rich combo-select dropdowns.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class coursesettings_page implements \renderable, \templatable {

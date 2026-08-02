@@ -18,7 +18,7 @@
  * Upgrade steps for local_edqscore.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -158,6 +158,19 @@ function xmldb_local_edqscore_upgrade($oldversion) {
         }
 
         upgrade_plugin_savepoint(true, 2026073003, 'local', 'edqscore');
+    }
+
+    if ($oldversion < 2026073101) {
+        // Editing teachers could change the course's own grading-turnaround
+        // thresholds — the very numbers their EdQ score is measured
+        // against. Course settings are now manager-only; drop the grant
+        // this capability's archetype originally gave editing teachers.
+        $editingteacherrole = $DB->get_record('role', ['shortname' => 'editingteacher']);
+        if ($editingteacherrole) {
+            unassign_capability('local/edqscore:configurecourse', $editingteacherrole->id);
+        }
+
+        upgrade_plugin_savepoint(true, 2026073101, 'local', 'edqscore');
     }
 
     return true;

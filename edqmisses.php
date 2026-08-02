@@ -19,7 +19,7 @@
  * dragging the EdQ ring below 100%, with a link straight to it.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -27,7 +27,7 @@ require_once(__DIR__ . '/../../lib.php');
  * they'd see on the dashboard itself.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class send_edqscore_digest extends \core\task\scheduled_task {

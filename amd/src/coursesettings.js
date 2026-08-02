@@ -19,7 +19,7 @@
  * the expand-all/collapse-all button for the settings sections.
  *
  * @module     local_edqscore/coursesettings
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

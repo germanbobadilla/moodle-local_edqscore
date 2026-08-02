@@ -58,14 +58,18 @@ installation help.
 Once installed, teachers and editing teachers see an **EdQ Score** link in
 the course navigation. Users with `local/edqscore:manage` can set
 site-wide defaults under *Site administration > Plugins > Local plugins >
-EdQ Score*; users with `local/edqscore:configurecourse` (editing teachers
-and managers, by default) can override those defaults per course from the
-dashboard's *Course settings* page.
+EdQ Score*; users with `local/edqscore:configurecourse` (managers, by
+default) can override those defaults per course from the dashboard's
+*Course settings* page. Editing teachers can view the board but not
+change the thresholds it's measured against.
 
-A **Program Director** role is created automatically on install, scoped
-to view/manage/configure the plugin plus `moodle/site:accessallgroups`
-and `moodle/course:viewparticipants`, for staff who need visibility
-across a program without full site administration access.
+Sites that want a "Program Director" style role — full visibility and
+threshold control across a program without full site administration
+access — can create one via *Site administration > Users > Permissions >
+Define roles* and grant it `local/edqscore:view`, `local/edqscore:manage`,
+`local/edqscore:configurecourse`, and (to see across all groups)
+`moodle/site:accessallgroups`. The plugin doesn't create this role for
+you, since not every site organises staff this way.
 
 ## Capabilities
 

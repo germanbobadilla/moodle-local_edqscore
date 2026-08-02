@@ -26,7 +26,7 @@ require_once(__DIR__ . '/../../lib.php');
  * as the dashboard) submitted an assignment in the last 24 hours.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class send_submission_digest extends \core\task\scheduled_task {

@@ -22,7 +22,7 @@ namespace local_edqscore\output;
  * Assignments, Forums and Quizzes detail pages.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_page implements \renderable, \templatable {

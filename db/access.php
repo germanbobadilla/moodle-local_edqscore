@@ -18,7 +18,7 @@
  * Capability definitions for local_edqscore.
  *
  * @package    local_edqscore
- * @copyright  2026 Emvipi Baseball Institute
+ * @copyright  2026 German Bobadilla, MA
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -53,12 +53,13 @@ $capabilities = [
     ],
 
     // Override the grading-turnaround thresholds for one specific course.
+    // Deliberately manager-only: editing teachers can view the board but
+    // shouldn't be able to change the thresholds it's measured against.
     'local/edqscore:configurecourse' => [
         'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
-            'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW,
         ],
     ],
