@@ -66,7 +66,7 @@
             <div class="mygama-card-badges">
                 {{#hasessay}}
                 <div class="mygama-ring-wrap">
-                    <div class="mygama-ring" style="background: conic-gradient(#1E7A34 {{gradedpct}}%, #e9ecef 0)">
+                    <div class="mygama-ring" style="background: conic-gradient(var(--edq-accent-assign) {{gradedpct}}%, var(--edq-border) 0)">
                         <div class="mygama-ring-hole"><span class="mygama-ring-value">{{gradedpct}}%</span></div>
                     </div>
                     <div class="mygama-ring-caption">{{gradedlabel}}</div>
@@ -90,7 +90,7 @@
                 {{/hasessay}}
                 {{^hasessay}}
                 <div class="mygama-ring-wrap">
-                    <div class="mygama-ring" style="background: conic-gradient(#FFC72C {{completedpct}}%, #e9ecef 0)">
+                    <div class="mygama-ring" style="background: conic-gradient(var(--edq-accent-quiz) {{completedpct}}%, var(--edq-border) 0)">
                         <div class="mygama-ring-hole"><span class="mygama-ring-value">{{completedpct}}%</span></div>
                     </div>
                     <div class="mygama-ring-caption">{{completedlabel}}</div>

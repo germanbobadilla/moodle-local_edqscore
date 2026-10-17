@@ -91,6 +91,12 @@ class edqmisses_page implements \renderable, \templatable {
             'edqlabel' => get_string('edq', 'local_edqscore'),
             'edqscore' => $this->edq['score'],
             'edqcolor' => $this->edq['color'],
+            // Same reasoning as course_page.php: a trackable count of zero means nothing has
+            // happened yet, not that everything is on time, so the ring and the "all clear"
+            // message both need a distinct empty state instead of reading as a perfect result.
+            'hasedqdata' => $this->edq['trackable'] > 0,
+            'edqnodatalabel' => get_string('edqnodata', 'local_edqscore'),
+            'edqnodatadesc' => get_string('edqnodatadesc', 'local_edqscore'),
             'misscount' => count($misses),
             'misses' => $misses,
             'hasmisses' => !empty($misses),

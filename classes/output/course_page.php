@@ -143,7 +143,7 @@ class course_page implements \renderable, \templatable {
                 get_string('chartcompletiontitle', 'local_edqscore'),
                 [$assigngradedavg, $forumparticipationavg, $quizgradedavg]
             );
-            $series->set_colors(['#1E7A34', '#158FD1', '#FFC72C']);
+            $series->set_colors(['#2f6f4e', '#2b6693', '#93650f']);
             $chartobj->add_series($series);
             $chartobj->set_labels([
                 get_string('sectionassignments', 'local_edqscore'),
@@ -170,6 +170,11 @@ class course_page implements \renderable, \templatable {
             'edqlabel' => get_string('edq', 'local_edqscore'),
             'edqscore' => $this->edq['score'],
             'edqcolor' => $this->edq['color'],
+            // A trackable count of zero means nothing has been measured, not that everything went perfectly: the ring
+            // shows a neutral "no data yet" state instead of a green 100%, which would otherwise read as a result
+            // rather than the absence of one.
+            'hasedqdata' => $this->edq['trackable'] > 0,
+            'edqnodatalabel' => get_string('edqnodata', 'local_edqscore'),
             'scopenone' => $this->scope['scope'] === 'none',
             'scopenonemessage' => get_string('scopenone', 'local_edqscore'),
             'studentcount' => count($this->scope['userids']),

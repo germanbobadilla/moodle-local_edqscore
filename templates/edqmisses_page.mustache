@@ -39,15 +39,30 @@
 
     <div class="mygama-edq-card" style="margin-bottom: 1.25rem;">
         <div>
+            {{#hasedqdata}}
             <div class="mygama-edq-name">{{edqlabel}}: {{edqscore}}%</div>
+            {{/hasedqdata}}
+            {{^hasedqdata}}
+            <div class="mygama-edq-name">{{edqlabel}}: {{edqnodatalabel}}</div>
+            {{/hasedqdata}}
             <div class="mygama-edq-context">{{edqdesc}}</div>
         </div>
-        <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, rgba(255,255,255,.18) 0)">
+        {{#hasedqdata}}
+        <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, var(--edq-hero-ring-track) 0)">
             <div class="mygama-edq-ring-hole">
                 <span class="mygama-edq-value">{{edqscore}}%</span>
                 <span class="mygama-edq-caption">{{edqlabel}}</span>
             </div>
         </div>
+        {{/hasedqdata}}
+        {{^hasedqdata}}
+        <div class="mygama-edq-ring mygama-edq-ring-empty">
+            <div class="mygama-edq-ring-hole">
+                <span class="mygama-edq-value mygama-edq-value-empty">&ndash;</span>
+                <span class="mygama-edq-caption">{{edqnodatalabel}}</span>
+            </div>
+        </div>
+        {{/hasedqdata}}
     </div>
 
     <h2 class="mygama-section-title">
@@ -58,8 +73,14 @@
 
     {{^hasmisses}}
     <div class="mygama-empty">
+        {{#hasedqdata}}
         <i class="icon fa fa-check fa-fw" aria-hidden="true"></i>
         {{allontimemessage}}
+        {{/hasedqdata}}
+        {{^hasedqdata}}
+        <i class="icon fa fa-circle-info fa-fw" aria-hidden="true"></i>
+        {{edqnodatadesc}}
+        {{/hasedqdata}}
     </div>
     {{/hasmisses}}
 

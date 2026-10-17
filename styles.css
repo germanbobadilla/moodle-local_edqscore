@@ -1,6 +1,102 @@
-/* EdQ Score plugin styles. Deliberately self-contained with hardcoded
-   colours (not theme variables), so the board stays legible under any
-   active theme rather than depending on theme-level overrides. */
+/* EdQ Score plugin styles. Uses its own namespaced design tokens (--edq-*)
+   rather than Boost's theme variables, so the board stays legible and
+   on-brand under any active theme. Dark mode follows Moodle's own
+   Bootstrap 5.3 colour-mode convention: Boost writes the resolved mode to
+   [data-bs-theme] on <html>, including when the site default is "auto"
+   (a listener swaps it live to match the OS), so that's the only hook
+   these tokens need to watch. */
+
+:root {
+    --edq-bg-page: #f6f7f9;
+    --edq-surface: #ffffff;
+    --edq-surface-sunken: #f5f6f8;
+    --edq-border: #e2e5ea;
+    --edq-text: #1a2233;
+    --edq-text-muted: #64748b;
+    --edq-text-faint: #98a2b3;
+
+    --edq-primary: #2954a3;
+    --edq-primary-strong: #1d3d7a;
+    --edq-primary-soft: #eaf0fb;
+
+    --edq-hero-bg: #182333;
+    --edq-hero-surface: #22314a;
+    --edq-hero-text: #ffffff;
+    --edq-hero-text-muted: rgba(255, 255, 255, .68);
+    --edq-hero-ring-track: rgba(255, 255, 255, .16);
+    /* Tuned for legibility against the always-dark hero card, independent of the site's
+       own light/dark mode — the hero card doesn't change with it, so these don't either. */
+    --edq-hero-good: #4ade80;
+    --edq-hero-warn: #fbbf24;
+    --edq-hero-bad: #f87171;
+
+    --edq-good: #1b7a4d;
+    --edq-good-bg: #dcf0e4;
+    --edq-bad: #b3261e;
+    --edq-bad-bg: #f9dad8;
+    --edq-warn: #8a5a00;
+    --edq-warn-bg: #fdecc8;
+
+    --edq-accent-assign: #2f6f4e;
+    --edq-accent-forum: #2b6693;
+    --edq-accent-quiz: #93650f;
+
+    --edq-shadow-sm: 0 1px 2px rgba(16, 24, 40, .06);
+    --edq-shadow-md: 0 10px 24px rgba(16, 24, 40, .10);
+    --edq-radius: .625rem;
+
+    color-scheme: light;
+}
+
+[data-bs-theme="dark"] {
+    --edq-bg-page: #14161a;
+    --edq-surface: #1d2026;
+    --edq-surface-sunken: #22252c;
+    --edq-border: #323640;
+    --edq-text: #e7e9ee;
+    --edq-text-muted: #9aa3b2;
+    --edq-text-faint: #6b7280;
+
+    --edq-primary: #7fa6ef;
+    --edq-primary-strong: #a9c4f5;
+    --edq-primary-soft: rgba(127, 166, 239, .14);
+
+    --edq-hero-bg: #0e1116;
+    --edq-hero-surface: #171b23;
+    --edq-hero-text: #f4f6fb;
+    --edq-hero-text-muted: rgba(244, 246, 251, .68);
+    --edq-hero-ring-track: rgba(255, 255, 255, .14);
+
+    --edq-good: #52bb86;
+    --edq-good-bg: rgba(46, 125, 86, .22);
+    --edq-bad: #e5837a;
+    --edq-bad-bg: rgba(178, 46, 38, .25);
+    --edq-warn: #e0ad4e;
+    --edq-warn-bg: rgba(138, 90, 0, .28);
+
+    --edq-accent-assign: #6cb28c;
+    --edq-accent-forum: #6aa8d8;
+    --edq-accent-quiz: #d1a44a;
+
+    --edq-shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
+    --edq-shadow-md: 0 10px 28px rgba(0, 0, 0, .55);
+
+    color-scheme: dark;
+}
+
+.mygama-course-board {
+    color: var(--edq-text);
+}
+.mygama-course-board a.mygama-backlink,
+.mygama-course-board > p > a {
+    color: var(--edq-text-muted);
+    text-decoration: none;
+    font-size: .85rem;
+}
+.mygama-course-board > p > a:hover {
+    color: var(--edq-primary);
+    text-decoration: underline;
+}
 
 .mygama-edq-card {
     display: flex;
@@ -8,11 +104,11 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    background: linear-gradient(135deg, #0C2340 0%, #071526 100%);
-    border-radius: .75rem;
-    padding: 1rem 1.25rem;
+    background: var(--edq-hero-bg);
+    border-radius: var(--edq-radius);
+    padding: 1.1rem 1.4rem;
     margin-bottom: 1.25rem;
-    color: #ffffff;
+    color: var(--edq-hero-text);
 }
 .mygama-edq-profile {
     display: flex;
@@ -22,22 +118,22 @@
 }
 .mygama-edq-profile img {
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, .4);
+    border: 2px solid rgba(255, 255, 255, .25);
     display: block;
 }
 .mygama-edq-name {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.05rem;
-    color: #ffffff;
+    color: var(--edq-hero-text);
 }
 .mygama-edq-context {
     font-size: .8rem;
-    color: rgba(255, 255, 255, .7);
+    color: var(--edq-hero-text-muted);
 }
 .mygama-edq-score {
     display: flex;
     align-items: center;
-    gap: .75rem;
+    gap: .9rem;
 }
 .mygama-edq-ring {
     width: 78px;
@@ -48,11 +144,14 @@
     justify-content: center;
     flex-shrink: 0;
 }
+.mygama-edq-ring-empty {
+    background: var(--edq-hero-ring-track);
+}
 .mygama-edq-ring-hole {
     width: 62px;
     height: 62px;
     border-radius: 50%;
-    background: #0C2340;
+    background: var(--edq-hero-surface);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,20 +159,24 @@
 }
 .mygama-edq-value {
     font-size: 1.2rem;
-    font-weight: 800;
-    color: #ffffff;
+    font-weight: 700;
+    color: var(--edq-hero-text);
     line-height: 1.1;
+}
+.mygama-edq-value-empty {
+    color: var(--edq-hero-text-muted);
+    font-weight: 600;
 }
 .mygama-edq-caption {
     font-size: .62rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .06em;
-    color: rgba(255, 255, 255, .75);
+    color: var(--edq-hero-text-muted);
 }
 .mygama-edq-full {
     font-size: .78rem;
-    color: rgba(255, 255, 255, .85);
+    color: var(--edq-hero-text-muted);
     max-width: 12rem;
     text-align: right;
 }
@@ -83,18 +186,20 @@
     justify-content: flex-end;
     gap: .3rem;
     margin-top: .4rem;
-    color: #FFC72C;
-    font-weight: 700;
+    color: var(--edq-hero-text);
+    font-weight: 600;
     font-size: .75rem;
     text-decoration: none;
+    opacity: .85;
 }
 .mygama-edq-misseslink:hover {
-    color: #ffffff;
+    color: var(--edq-hero-text);
+    opacity: 1;
     text-decoration: underline;
 }
 .mygama-edq-misseslink .mygama-section-count {
     color: inherit;
-    font-weight: 700;
+    font-weight: 600;
     font-size: inherit;
 }
 
@@ -104,17 +209,18 @@
     align-items: center;
     justify-content: space-between;
     gap: .75rem;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: .6rem;
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
+    border-radius: var(--edq-radius);
     padding: .85rem 1rem;
     margin-bottom: 1.25rem;
 }
 .mygama-toolbar-info {
-    color: #212529;
+    color: var(--edq-text-muted);
+    font-size: .9rem;
 }
 .mygama-toolbar-info strong {
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-toolbar-actions {
     display: flex;
@@ -126,9 +232,9 @@
     font-size: .875rem;
     padding: .3rem 1.75rem .3rem .6rem;
     border-radius: .4rem;
-    border: 1px solid #ced4da;
-    background-color: #fff;
-    color: #212529;
+    border: 1px solid var(--edq-border);
+    background-color: var(--edq-surface);
+    color: var(--edq-text);
 }
 
 .mygama-kpirow {
@@ -138,25 +244,25 @@
     margin-bottom: 1.5rem;
 }
 .mygama-kpi {
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: .6rem;
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
+    border-radius: var(--edq-radius);
     padding: .85rem 1rem;
 }
 .mygama-kpi-value {
     font-size: 1.6rem;
     font-weight: 700;
     line-height: 1;
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-kpi-value.mygama-kpi-danger {
-    color: #d50032;
+    color: var(--edq-bad);
 }
 .mygama-kpi-label {
     font-size: .75rem;
     text-transform: uppercase;
     letter-spacing: .04em;
-    color: #6c757d;
+    color: var(--edq-text-muted);
     margin-top: .3rem;
 }
 
@@ -168,21 +274,22 @@
     margin-bottom: .75rem;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-section-title .icon {
-    color: #0c2340;
-    opacity: .8;
+    color: var(--edq-text-muted);
+    opacity: .9;
 }
 .mygama-section-count {
     font-weight: 400;
-    color: #6c757d;
+    color: var(--edq-text-muted);
     font-size: .85rem;
 }
 
 .mygama-item-card {
-    border: 1px solid #e9ecef;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+    border: 1px solid var(--edq-border);
+    background: var(--edq-surface);
+    box-shadow: var(--edq-shadow-sm);
     overflow: hidden;
 }
 .mygama-card-header {
@@ -196,9 +303,10 @@
     border: 0;
     width: 100%;
     text-align: left;
+    color: var(--edq-text);
 }
 .mygama-card-header:hover {
-    background-color: rgba(0, 0, 0, .03);
+    background-color: var(--edq-surface-sunken);
 }
 .mygama-card-main {
     display: flex;
@@ -208,26 +316,26 @@
 }
 .mygama-card-title {
     font-weight: 600;
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-card-title .mygama-pill {
     margin-left: .5rem;
     vertical-align: middle;
 }
 a.mygama-link {
-    color: #0e6ba8;
+    color: var(--edq-primary);
     text-decoration: underline;
-    text-decoration-color: rgba(14, 107, 168, .45);
+    text-decoration-color: color-mix(in srgb, var(--edq-primary) 45%, transparent);
     text-underline-offset: 2px;
     font-weight: 600;
 }
 a.mygama-link:hover {
-    color: #0a4d7a;
-    text-decoration-color: #0a4d7a;
+    color: var(--edq-primary-strong);
+    text-decoration-color: var(--edq-primary-strong);
 }
 .mygama-card-sub {
     font-size: .8rem;
-    color: #6c757d;
+    color: var(--edq-text-muted);
 }
 .mygama-card-badges {
     display: flex;
@@ -239,7 +347,7 @@ a.mygama-link:hover {
 .mygama-chevron {
     transition: transform .15s ease;
     flex-shrink: 0;
-    color: #6c757d;
+    color: var(--edq-text-muted);
 }
 .mygama-card-header[aria-expanded="true"] .mygama-chevron {
     transform: rotate(90deg);
@@ -248,17 +356,17 @@ a.mygama-link:hover {
     margin-bottom: 0;
 }
 .mygama-card-detail {
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid var(--edq-border);
 }
 .mygama-empty {
     display: flex;
     align-items: center;
     gap: .6rem;
-    background: #f8f9fa;
-    border: 1px dashed #ced4da;
-    border-radius: .6rem;
+    background: var(--edq-surface-sunken);
+    border: 1px dashed var(--edq-border);
+    border-radius: var(--edq-radius);
     padding: .85rem 1rem;
-    color: #6c757d;
+    color: var(--edq-text-muted);
 }
 
 .mygama-pill {
@@ -271,20 +379,21 @@ a.mygama-link:hover {
     white-space: nowrap;
 }
 .mygama-pill-neutral {
-    background-color: #e9ecef;
-    color: #212529;
+    background-color: var(--edq-surface-sunken);
+    color: var(--edq-text-muted);
+    border: 1px solid var(--edq-border);
 }
 .mygama-pill-good {
-    background-color: #d1e7dd;
-    color: #0a3622;
+    background-color: var(--edq-good-bg);
+    color: var(--edq-good);
 }
 .mygama-pill-bad {
-    background-color: #d50032;
-    color: #ffffff;
+    background-color: var(--edq-bad-bg);
+    color: var(--edq-bad);
 }
 .mygama-pill-warn {
-    background-color: #FFE8A3;
-    color: #6B4A00;
+    background-color: var(--edq-warn-bg);
+    color: var(--edq-warn);
 }
 
 .mygama-feedback-toggle {
@@ -293,6 +402,8 @@ a.mygama-link:hover {
     gap: .35rem;
     border: 0;
     cursor: pointer;
+    color: var(--edq-text);
+    background: none;
 }
 .mygama-inline-chevron {
     transition: transform .15s ease;
@@ -302,11 +413,11 @@ a.mygama-link:hover {
 }
 .mygama-feedback-box {
     margin-top: .5rem;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background: var(--edq-surface-sunken);
+    border: 1px solid var(--edq-border);
     border-radius: .5rem;
     padding: .65rem .85rem;
-    color: #212529;
+    color: var(--edq-text);
     max-width: 28rem;
     font-size: .85rem;
     line-height: 1.4;
@@ -330,20 +441,20 @@ a.mygama-link:hover {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--edq-surface);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04);
+    box-shadow: inset 0 0 0 1px var(--edq-border);
 }
 .mygama-ring-value {
     font-size: .7rem;
     font-weight: 800;
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-ring-caption {
     font-size: .68rem;
-    color: #6c757d;
+    color: var(--edq-text-muted);
     text-transform: uppercase;
     letter-spacing: .03em;
     line-height: 1.2;
@@ -371,29 +482,30 @@ a.mygama-link:hover {
     margin: 0;
 }
 .mygama-chip-neutral {
-    background-color: #eef2f7;
-    color: #0c2340;
+    background-color: var(--edq-surface-sunken);
+    color: var(--edq-text-muted);
+    border: 1px solid var(--edq-border);
 }
 .mygama-chip-good {
-    background-color: #d1e7dd;
-    color: #0a3622;
+    background-color: var(--edq-good-bg);
+    color: var(--edq-good);
 }
 .mygama-chip-bad {
-    background-color: #d50032;
-    color: #ffffff;
+    background-color: var(--edq-bad-bg);
+    color: var(--edq-bad);
 }
 
 .mygama-chartcard {
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: .6rem;
-    padding: 1rem;
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
+    border-radius: var(--edq-radius);
+    padding: 1.1rem 1.2rem;
     margin-bottom: 1.5rem;
 }
 .mygama-chartcard h2 {
     font-size: 1rem;
     font-weight: 700;
-    color: #16202a;
+    color: var(--edq-text);
     margin-bottom: .75rem;
 }
 
@@ -408,64 +520,55 @@ a.mygama-link:hover {
     display: flex;
     flex-direction: column;
     gap: .4rem;
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-top: 4px solid var(--mygama-accent, #0c2340);
-    border-radius: .75rem;
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
+    border-top: 3px solid var(--mygama-accent, var(--edq-primary));
+    border-radius: var(--edq-radius);
     padding: 1.25rem 1.15rem 1.1rem;
     text-decoration: none;
     color: inherit;
     overflow: hidden;
-    transition: transform .15s ease, box-shadow .15s ease;
-}
-.mygama-summarycard::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, var(--mygama-accent, #0c2340) 0%, transparent 55%);
-    opacity: .06;
-    pointer-events: none;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 .mygama-summarycard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 26px rgba(0, 0, 0, .12);
+    transform: translateY(-2px);
+    box-shadow: var(--edq-shadow-md);
     color: inherit;
     text-decoration: none;
 }
 .mygama-summarycard-icon {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    background: var(--mygama-accent, #0c2340);
-    color: #fff;
+    background: var(--edq-surface-sunken);
+    color: var(--mygama-accent, var(--edq-primary));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+    font-size: 1.1rem;
 }
 .mygama-summarycard-title {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.05rem;
-    color: #16202a;
+    color: var(--edq-text);
     margin-top: .3rem;
 }
 .mygama-summarycard-statvalue {
     font-size: 2rem;
-    font-weight: 800;
-    color: #16202a;
+    font-weight: 700;
+    color: var(--edq-text);
     line-height: 1;
 }
 .mygama-summarycard-statlabel {
     font-size: .78rem;
-    color: #6c757d;
+    color: var(--edq-text-muted);
 }
 .mygama-summarycard-cta {
     margin-top: auto;
     padding-top: .4rem;
     font-size: .8rem;
-    font-weight: 700;
-    color: var(--mygama-accent, #0c2340);
+    font-weight: 600;
+    color: var(--mygama-accent, var(--edq-primary));
 }
 
 .mygama-misslist {
@@ -482,7 +585,7 @@ a.mygama-link:hover {
     gap: .6rem;
     padding: .55rem .7rem;
     border-radius: .5rem;
-    background: #f8f9fa;
+    background: var(--edq-surface-sunken);
 }
 .mygama-missdot {
     width: .55rem;
@@ -493,12 +596,12 @@ a.mygama-link:hover {
 }
 .mygama-missitemname {
     font-weight: 600;
-    color: #16202a;
+    color: var(--edq-text);
     font-size: .88rem;
 }
 .mygama-missreason {
     font-size: .78rem;
-    color: #6c757d;
+    color: var(--edq-text-muted);
     margin-top: .1rem;
 }
 
@@ -506,7 +609,7 @@ a.mygama-link:hover {
     display: flex;
     align-items: flex-start;
     gap: .6rem;
-    border-radius: .6rem;
+    border-radius: var(--edq-radius);
     border: 1px solid;
     padding: .75rem 1rem;
     margin-top: .5rem;
@@ -519,18 +622,19 @@ a.mygama-link:hover {
     flex-shrink: 0;
 }
 .mygama-alert-warning {
-    background-color: #FFF6E0;
-    border-color: #F0C24B;
-    color: #6B4A00;
+    background-color: var(--edq-warn-bg);
+    border-color: var(--edq-warn);
+    color: var(--edq-warn);
 }
 .mygama-alert-warning .icon {
-    color: #B8860B;
+    color: var(--edq-warn);
 }
 
 .mygama-settings-section {
-    border: 1px solid #e9ecef;
-    border-radius: .6rem;
+    border: 1px solid var(--edq-border);
+    border-radius: var(--edq-radius);
     margin-bottom: 1rem;
+    background: var(--edq-surface);
 }
 .mygama-settings-sectionhead {
     display: flex;
@@ -538,23 +642,24 @@ a.mygama-link:hover {
     gap: .6rem;
     width: 100%;
     text-align: left;
-    background: #f8f9fa;
+    background: var(--edq-surface-sunken);
     border: 0;
-    border-radius: .6rem .6rem 0 0;
+    border-radius: var(--edq-radius) var(--edq-radius) 0 0;
     padding: .85rem 1.1rem;
     cursor: pointer;
+    color: var(--edq-text);
 }
 .mygama-settings-sectionhead:hover {
-    background: #eef2f7;
+    background: var(--edq-primary-soft);
 }
 .mygama-settings-sectionhead h3 {
     margin: 0;
     font-size: 1.05rem;
     font-weight: 700;
-    color: #16202a;
+    color: var(--edq-text);
 }
 .mygama-settings-sectionhead .icon {
-    color: #6c757d;
+    color: var(--edq-text-muted);
 }
 .mygama-settings-sectionbody {
     padding: 1.1rem 1.1rem .3rem;
@@ -578,24 +683,24 @@ a.mygama-link:hover {
     justify-content: space-between;
     gap: .5rem;
     width: 100%;
-    background: #ffffff;
-    border: 1px solid #ced4da;
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
     border-radius: .5rem;
     padding: .55rem .85rem;
     font-size: .9rem;
-    color: #16202a;
+    color: var(--edq-text);
     cursor: pointer;
     text-align: left;
 }
 .mygama-combo-trigger:hover {
-    border-color: #158FD1;
+    border-color: var(--edq-primary);
 }
 .mygama-combo-trigger[aria-expanded="true"] {
-    border-color: #158FD1;
-    box-shadow: 0 0 0 3px rgba(21, 143, 209, .15);
+    border-color: var(--edq-primary);
+    box-shadow: 0 0 0 3px var(--edq-primary-soft);
 }
 .mygama-combo-trigger .icon {
-    color: #6c757d;
+    color: var(--edq-text-muted);
     transition: transform .15s ease;
     flex-shrink: 0;
 }
@@ -610,10 +715,10 @@ a.mygama-link:hover {
     min-width: 100%;
     width: max-content;
     max-width: 28rem;
-    background: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: .6rem;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .16);
+    background: var(--edq-surface);
+    border: 1px solid var(--edq-border);
+    border-radius: var(--edq-radius);
+    box-shadow: var(--edq-shadow-md);
     padding: .4rem;
 }
 .mygama-combo-option {
@@ -625,16 +730,16 @@ a.mygama-link:hover {
     cursor: pointer;
 }
 .mygama-combo-option:hover {
-    background: #f1f6fb;
+    background: var(--edq-surface-sunken);
 }
 .mygama-combo-option-selected {
-    background: #eaf4fc;
+    background: var(--edq-primary-soft);
 }
 .mygama-combo-check {
     width: 1.1rem;
     height: 1.1rem;
     border-radius: 50%;
-    border: 1.5px solid #adb5bd;
+    border: 1.5px solid var(--edq-text-faint);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -643,9 +748,9 @@ a.mygama-link:hover {
     color: transparent;
 }
 .mygama-combo-option-selected .mygama-combo-check {
-    background: #16202a;
-    border-color: #16202a;
-    color: #ffffff;
+    background: var(--edq-primary);
+    border-color: var(--edq-primary);
+    color: var(--edq-surface);
 }
 .mygama-combo-optiontext {
     min-width: 0;
@@ -653,12 +758,12 @@ a.mygama-link:hover {
 .mygama-combo-optionlabel {
     display: block;
     font-weight: 700;
-    color: #16202a;
+    color: var(--edq-text);
     font-size: .87rem;
 }
 .mygama-combo-optiondesc {
     display: block;
-    color: #6c757d;
+    color: var(--edq-text-muted);
     font-size: .78rem;
     margin-top: .1rem;
     line-height: 1.35;

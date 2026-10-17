@@ -41,12 +41,22 @@
                     <i class="icon fa fa-arrow-right fa-xs" aria-hidden="true"></i>
                 </a>
             </div>
-            <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, rgba(255,255,255,.18) 0)">
+            {{#hasedqdata}}
+            <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, var(--edq-hero-ring-track) 0)">
                 <div class="mygama-edq-ring-hole">
                     <span class="mygama-edq-value">{{edqscore}}%</span>
                     <span class="mygama-edq-caption">{{edqlabel}}</span>
                 </div>
             </div>
+            {{/hasedqdata}}
+            {{^hasedqdata}}
+            <div class="mygama-edq-ring mygama-edq-ring-empty">
+                <div class="mygama-edq-ring-hole">
+                    <span class="mygama-edq-value mygama-edq-value-empty">&ndash;</span>
+                    <span class="mygama-edq-caption">{{edqnodatalabel}}</span>
+                </div>
+            </div>
+            {{/hasedqdata}}
         </div>
     </div>
 
@@ -80,7 +90,7 @@
     {{/haschart}}
 
     <div class="mygama-summarygrid">
-        <a class="mygama-summarycard" style="--mygama-accent: #1E7A34;" href="{{assignurl}}">
+        <a class="mygama-summarycard" style="--mygama-accent: var(--edq-accent-assign);" href="{{assignurl}}">
             <div class="mygama-summarycard-icon"><i class="icon fa fa-clipboard-list fa-fw" aria-hidden="true"></i></div>
             <div class="mygama-summarycard-title">{{assigntitle}}</div>
             <div class="mygama-summarycard-statvalue">{{assigngradedavg}}%</div>
@@ -92,7 +102,7 @@
             {{/hasassignoverdue}}
             <span class="mygama-summarycard-cta">{{viewdetailslabel}} &rarr;</span>
         </a>
-        <a class="mygama-summarycard" style="--mygama-accent: #158FD1;" href="{{forumurl}}">
+        <a class="mygama-summarycard" style="--mygama-accent: var(--edq-accent-forum);" href="{{forumurl}}">
             <div class="mygama-summarycard-icon"><i class="icon fa fa-comments fa-fw" aria-hidden="true"></i></div>
             <div class="mygama-summarycard-title">{{forumtitle}}</div>
             <div class="mygama-summarycard-statvalue">{{forumparticipationavg}}%</div>
@@ -104,7 +114,7 @@
             {{/hasforumoverdue}}
             <span class="mygama-summarycard-cta">{{viewdetailslabel}} &rarr;</span>
         </a>
-        <a class="mygama-summarycard" style="--mygama-accent: #FFC72C;" href="{{quizurl}}">
+        <a class="mygama-summarycard" style="--mygama-accent: var(--edq-accent-quiz);" href="{{quizurl}}">
             <div class="mygama-summarycard-icon"><i class="icon fa fa-circle-question fa-fw" aria-hidden="true"></i></div>
             <div class="mygama-summarycard-title">{{quiztitle}}</div>
             <div class="mygama-summarycard-statvalue">{{quizgradedavg}}%</div>

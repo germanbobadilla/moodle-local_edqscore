@@ -399,7 +399,7 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
             }
             if ($s->latestatus !== 'ontime') {
                 $edqmisses[] = (object) [
-                    'module' => 'assign', 'accent' => '#1E7A34', 'status' => $s->latestatus,
+                    'module' => 'assign', 'accent' => 'var(--edq-accent-assign)', 'status' => $s->latestatus,
                     'item' => format_string($a->name), 'student' => $s->studentname,
                     'reason' => get_string($s->grade === null ? 'edqmiss_notgraded' : 'edqmiss_gradedlate', 'local_edqscore'),
                     'url' => $assignurl,
@@ -407,7 +407,7 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
             }
             if ($edqincludefeedback && $s->feedback === null) {
                 $edqmisses[] = (object) [
-                    'module' => 'assign', 'accent' => '#1E7A34', 'status' => null,
+                    'module' => 'assign', 'accent' => 'var(--edq-accent-assign)', 'status' => null,
                     'item' => format_string($a->name), 'student' => $s->studentname,
                     'reason' => get_string('edqmiss_nofeedback', 'local_edqscore'),
                     'url' => $assignurl,
@@ -423,7 +423,7 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
         foreach ($f->discussionlist as $d) {
             if ($d->latestatus !== 'ontime') {
                 $edqmisses[] = (object) [
-                    'module' => 'forum', 'accent' => '#158FD1', 'status' => $d->latestatus,
+                    'module' => 'forum', 'accent' => 'var(--edq-accent-forum)', 'status' => $d->latestatus,
                     'item' => format_string($f->name) . ': ' . format_string($d->name), 'student' => $d->lastpostname,
                     'reason' => get_string('edqmiss_noreply', 'local_edqscore'),
                     'url' => new moodle_url('/mod/forum/discuss.php', ['d' => $d->discussionid]),
@@ -443,7 +443,7 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
                 if ($s->attemptcount > 0 && $s->latestatus !== 'ontime') {
                     $reasonstring = $s->needsmanualgrading ? 'edqmiss_notgraded' : 'edqmiss_gradedlate';
                     $edqmisses[] = (object) [
-                        'module' => 'quiz', 'accent' => '#FFC72C', 'status' => $s->latestatus,
+                        'module' => 'quiz', 'accent' => 'var(--edq-accent-quiz)', 'status' => $s->latestatus,
                         'item' => format_string($q->name), 'student' => $s->studentname,
                         'reason' => get_string($reasonstring, 'local_edqscore'),
                         'url' => $s->lastattemptid
@@ -455,13 +455,16 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
         }
     }
 
+    // A trackable count of zero means nothing has happened yet in the course, not that
+    // everything went perfectly: callers check 'trackable' before treating a 100 here as
+    // an actual result (see course_page.php's 'hasedqdata').
     $edqscore = $edqtrackable > 0 ? round(($edqontime / $edqtrackable) * 100) : 100;
     if ($edqscore >= 90) {
-        $edqcolor = '#1E7A34';
+        $edqcolor = 'var(--edq-hero-good)';
     } else if ($edqscore >= 70) {
-        $edqcolor = '#FFC72C';
+        $edqcolor = 'var(--edq-hero-warn)';
     } else {
-        $edqcolor = '#D50032';
+        $edqcolor = 'var(--edq-hero-bad)';
     }
 
     return [
