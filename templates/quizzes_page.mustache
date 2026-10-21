@@ -53,10 +53,10 @@
                     <div class="mygama-card-title">
                         {{#url}}
                         <a class="mygama-link" href="{{url}}" onclick="event.stopPropagation()">
-                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{name}}
+                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{{name}}}
                         </a>
                         {{/url}}
-                        {{^url}}{{name}}{{/url}}
+                        {{^url}}{{{name}}}{{/url}}
                         {{#hasessay}}<span class="mygama-pill mygama-pill-neutral">{{containsessaylabel}}</span>{{/hasessay}}
                         {{^hasessay}}<span class="mygama-pill mygama-pill-neutral">{{autogradedlabel}}</span>{{/hasessay}}
                     </div>

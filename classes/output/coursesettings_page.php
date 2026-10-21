@@ -26,7 +26,6 @@ namespace local_edqscore\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class coursesettings_page implements \renderable, \templatable {
-
     /** @var \stdClass the course */
     protected $course;
 

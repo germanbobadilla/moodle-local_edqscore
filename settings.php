@@ -34,20 +34,38 @@ require_once($CFG->dirroot . '/local/edqscore/lib.php');
 if ($hassiteconfig || has_capability('local/edqscore:manage', context_system::instance())) {
     $settings = new admin_settingpage('local_edqscore', get_string('pluginname', 'local_edqscore'), 'local/edqscore:manage');
 
-    $settings->add(new admin_setting_heading('local_edqscore_settingsheading',
-        get_string('settingsheading', 'local_edqscore'), get_string('settingsheading_desc', 'local_edqscore')));
+    $settings->add(new admin_setting_heading(
+        'local_edqscore_settingsheading',
+        get_string('settingsheading', 'local_edqscore'),
+        get_string('settingsheading_desc', 'local_edqscore')
+    ));
 
-    $settings->add(new admin_setting_heading('local_edqscore_settingsgroupgeneral',
-        get_string('settingsgroupgeneral', 'local_edqscore'), ''));
+    $settings->add(new admin_setting_heading(
+        'local_edqscore_settingsgroupgeneral',
+        get_string('settingsgroupgeneral', 'local_edqscore'),
+        ''
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/showungraded',
-        get_string('showungraded', 'local_edqscore'), get_string('showungraded_desc', 'local_edqscore'), 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/showungraded',
+        get_string('showungraded', 'local_edqscore'),
+        get_string('showungraded_desc', 'local_edqscore'),
+        0
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/edqincludefeedback',
-        get_string('edqincludefeedback', 'local_edqscore'), get_string('edqincludefeedback_desc', 'local_edqscore'), 1));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/edqincludefeedback',
+        get_string('edqincludefeedback', 'local_edqscore'),
+        get_string('edqincludefeedback_desc', 'local_edqscore'),
+        1
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/edqincludequizmanual',
-        get_string('edqincludequizmanual', 'local_edqscore'), get_string('edqincludequizmanual_desc', 'local_edqscore'), 1));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/edqincludequizmanual',
+        get_string('edqincludequizmanual', 'local_edqscore'),
+        get_string('edqincludequizmanual_desc', 'local_edqscore'),
+        1
+    ));
 
     $countfromoptions = [
         LOCAL_EDQSCORE_COUNTFROM_SUBMISSION => get_string('countfrom_submission', 'local_edqscore'),
@@ -64,23 +82,42 @@ if ($hassiteconfig || has_capability('local/edqscore:manage', context_system::in
         LOCAL_EDQSCORE_COUNTFROM_CUTOFFDATE_FALLBACK => get_string('countfrom_cutoffdatefallback', 'local_edqscore'),
     ];
 
-    $settings->add(new admin_setting_heading('local_edqscore_settingsgroupassignments',
-        get_string('settingsgroupassignments', 'local_edqscore'), ''));
+    $settings->add(new admin_setting_heading(
+        'local_edqscore_settingsgroupassignments',
+        get_string('settingsgroupassignments', 'local_edqscore'),
+        ''
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/assigngradinghours',
-        get_string('assigngradinghours', 'local_edqscore'), get_string('assigngradinghours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_ASSIGN_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/assigngradinghours',
+        get_string('assigngradinghours', 'local_edqscore'),
+        get_string('assigngradinghours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_ASSIGN_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/assignlatehours',
-        get_string('assignlatehours', 'local_edqscore'), get_string('assignlatehours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/assignlatehours',
+        get_string('assignlatehours', 'local_edqscore'),
+        get_string('assignlatehours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configselect('local_edqscore/assigncountfrom',
-        get_string('assigncountfrom', 'local_edqscore'), get_string('assigncountfrom_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, $assigncountfromoptions));
+    $settings->add(new admin_setting_configselect(
+        'local_edqscore/assigncountfrom',
+        get_string('assigncountfrom', 'local_edqscore'),
+        get_string('assigncountfrom_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        $assigncountfromoptions
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/onlyshowsubmitted',
-        get_string('onlyshowsubmitted', 'local_edqscore'), get_string('onlyshowsubmitted_desc', 'local_edqscore'), 0));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/onlyshowsubmitted',
+        get_string('onlyshowsubmitted', 'local_edqscore'),
+        get_string('onlyshowsubmitted_desc', 'local_edqscore'),
+        0
+    ));
 
     // Doesn't make sense once assignments are tracked from the due date
     // instead of the submission date — seeing who hasn't submitted yet is
@@ -93,38 +130,72 @@ if ($hassiteconfig || has_capability('local/edqscore:manage', context_system::in
         LOCAL_EDQSCORE_COUNTFROM_SUBMISSION
     );
 
-    $settings->add(new admin_setting_heading('local_edqscore_settingsgroupforums',
-        get_string('settingsgroupforums', 'local_edqscore'), ''));
+    $settings->add(new admin_setting_heading(
+        'local_edqscore_settingsgroupforums',
+        get_string('settingsgroupforums', 'local_edqscore'),
+        ''
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/forumgradinghours',
-        get_string('forumgradinghours', 'local_edqscore'), get_string('forumgradinghours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_FORUM_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/forumgradinghours',
+        get_string('forumgradinghours', 'local_edqscore'),
+        get_string('forumgradinghours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_FORUM_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/forumlatehours',
-        get_string('forumlatehours', 'local_edqscore'), get_string('forumlatehours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/forumlatehours',
+        get_string('forumlatehours', 'local_edqscore'),
+        get_string('forumlatehours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configselect('local_edqscore/forumcountfrom',
-        get_string('forumcountfrom', 'local_edqscore'), get_string('forumcountfrom_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, $countfromoptions));
+    $settings->add(new admin_setting_configselect(
+        'local_edqscore/forumcountfrom',
+        get_string('forumcountfrom', 'local_edqscore'),
+        get_string('forumcountfrom_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        $countfromoptions
+    ));
 
-    $settings->add(new admin_setting_heading('local_edqscore_settingsgroupquizzes',
-        get_string('settingsgroupquizzes', 'local_edqscore'), ''));
+    $settings->add(new admin_setting_heading(
+        'local_edqscore_settingsgroupquizzes',
+        get_string('settingsgroupquizzes', 'local_edqscore'),
+        ''
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/quizgradinghours',
-        get_string('quizgradinghours', 'local_edqscore'), get_string('quizgradinghours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_QUIZ_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/quizgradinghours',
+        get_string('quizgradinghours', 'local_edqscore'),
+        get_string('quizgradinghours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_QUIZ_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configtext('local_edqscore/quizlatehours',
-        get_string('quizlatehours', 'local_edqscore'), get_string('quizlatehours_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS, PARAM_INT));
+    $settings->add(new admin_setting_configtext(
+        'local_edqscore/quizlatehours',
+        get_string('quizlatehours', 'local_edqscore'),
+        get_string('quizlatehours_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_DEFAULT_LATE_HOURS,
+        PARAM_INT
+    ));
 
-    $settings->add(new admin_setting_configselect('local_edqscore/quizcountfrom',
-        get_string('quizcountfrom', 'local_edqscore'), get_string('quizcountfrom_desc', 'local_edqscore'),
-        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, $countfromoptions));
+    $settings->add(new admin_setting_configselect(
+        'local_edqscore/quizcountfrom',
+        get_string('quizcountfrom', 'local_edqscore'),
+        get_string('quizcountfrom_desc', 'local_edqscore'),
+        LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        $countfromoptions
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/quizonlymanual',
-        get_string('quizonlymanual', 'local_edqscore'), get_string('quizonlymanual_desc', 'local_edqscore'), 1));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/quizonlymanual',
+        get_string('quizonlymanual', 'local_edqscore'),
+        get_string('quizonlymanual_desc', 'local_edqscore'),
+        1
+    ));
 
     $settings->add(new admin_setting_heading(
         'local_edqscore_settingsgroupnotifications',
@@ -132,11 +203,19 @@ if ($hassiteconfig || has_capability('local/edqscore:manage', context_system::in
         get_string('settingsgroupnotifications_desc', 'local_edqscore')
     ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/edqscoredigestenabled',
-        get_string('edqscoredigestenabled', 'local_edqscore'), get_string('edqscoredigestenabled_desc', 'local_edqscore'), 1));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/edqscoredigestenabled',
+        get_string('edqscoredigestenabled', 'local_edqscore'),
+        get_string('edqscoredigestenabled_desc', 'local_edqscore'),
+        1
+    ));
 
-    $settings->add(new admin_setting_configcheckbox('local_edqscore/submissiondigestenabled',
-        get_string('submissiondigestenabled', 'local_edqscore'), get_string('submissiondigestenabled_desc', 'local_edqscore'), 1));
+    $settings->add(new admin_setting_configcheckbox(
+        'local_edqscore/submissiondigestenabled',
+        get_string('submissiondigestenabled', 'local_edqscore'),
+        get_string('submissiondigestenabled_desc', 'local_edqscore'),
+        1
+    ));
 
     $ADMIN->add('localplugins', $settings);
 }

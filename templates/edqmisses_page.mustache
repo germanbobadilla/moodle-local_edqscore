@@ -24,7 +24,7 @@
     * backurl, pluginname
     * toolbar - see templates/toolbar.mustache
     * scopenone, scopenonemessage
-    * edqmissestitle, edqdesc, edqlabel, edqscore, edqcolor
+    * edqmissestitle, edqhelpicon, edqlabel, edqscore, edqcolor
     * misscount, hasmisses, misses - list of {item, url, student, reason, accent, status}
     * allontimemessage
 }}
@@ -40,12 +40,11 @@
     <div class="mygama-edq-card" style="margin-bottom: 1.25rem;">
         <div>
             {{#hasedqdata}}
-            <div class="mygama-edq-name">{{edqlabel}}: {{edqscore}}%</div>
+            <div class="mygama-edq-name">{{edqlabel}}: {{edqscore}}% {{{edqhelpicon}}}</div>
             {{/hasedqdata}}
             {{^hasedqdata}}
-            <div class="mygama-edq-name">{{edqlabel}}: {{edqnodatalabel}}</div>
+            <div class="mygama-edq-name">{{edqlabel}}: {{edqnodatalabel}} {{{edqhelpicon}}}</div>
             {{/hasedqdata}}
-            <div class="mygama-edq-context">{{edqdesc}}</div>
         </div>
         {{#hasedqdata}}
         <div class="mygama-edq-ring" style="background: conic-gradient({{edqcolor}} {{edqscore}}%, var(--edq-hero-ring-track) 0)">
@@ -91,8 +90,8 @@
             <span class="mygama-missdot" style="background: {{accent}}"></span>
             <div class="mygama-missbody">
                 <div class="mygama-missitemname">
-                    {{#url}}<a class="mygama-link" href="{{url}}">{{item}}</a>{{/url}}
-                    {{^url}}{{item}}{{/url}}
+                    {{#url}}<a class="mygama-link" href="{{url}}">{{{item}}}</a>{{/url}}
+                    {{^url}}{{{item}}}{{/url}}
                     {{#student}} &middot; {{student}}{{/student}}
                     {{#status}}<span class="mygama-pill {{pillclass}}">{{label}}</span>{{/status}}
                 </div>

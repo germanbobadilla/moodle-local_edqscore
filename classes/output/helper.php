@@ -27,7 +27,6 @@ namespace local_edqscore\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class helper {
-
     /**
      * Export the data needed by the templates/toolbar.mustache partial.
      *

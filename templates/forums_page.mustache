@@ -52,10 +52,10 @@
                     <div class="mygama-card-title">
                         {{#url}}
                         <a class="mygama-link" href="{{url}}" onclick="event.stopPropagation()">
-                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{name}}
+                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{{name}}}
                         </a>
                         {{/url}}
-                        {{^url}}{{name}}{{/url}}
+                        {{^url}}{{{name}}}{{/url}}
                     </div>
                     <div class="mygama-card-sub">
                         {{discussionslabel}}: {{discussioncount}} &middot; {{postslabel}}: {{postcount}}
@@ -101,7 +101,7 @@
                         {{#nodiscussions}}<tr><td colspan="4" class="text-muted">{{nodiscussionsmessage}}</td></tr>{{/nodiscussions}}
                         {{#discussions}}
                         <tr>
-                            <td><a class="mygama-link" href="{{discussurl}}">{{name}}</a></td>
+                            <td><a class="mygama-link" href="{{discussurl}}">{{{name}}}</a></td>
                             <td>
                                 {{#nopost}}<span class="text-muted">{{nopostslabel}}</span>{{/nopost}}
                                 {{#bystudent}}<a class="mygama-link" href="{{postanchor}}">{{lastpostname}}</a> ({{studentslabel}}){{/bystudent}}

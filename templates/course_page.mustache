@@ -22,19 +22,19 @@
     Quizzes detail pages.
 }}
 <div class="mygama-course-board">
-    <p><a href="{{courseurl}}">&laquo; {{coursefullname}}</a></p>
+    <p><a href="{{courseurl}}">&laquo; {{{coursefullname}}}</a></p>
 
     <div class="mygama-edq-card">
         <div class="mygama-edq-profile">
             {{{userpicture}}}
             <div>
                 <div class="mygama-edq-name">{{username}}</div>
-                <div class="mygama-edq-context">{{coursefullname}}</div>
+                <div class="mygama-edq-context">{{{coursefullname}}}</div>
             </div>
         </div>
         <div class="mygama-edq-score">
             <div class="mygama-edq-full">
-                {{edqdesc}}
+                <div class="mygama-edq-labelrow">{{edqlabel}} {{{edqhelpicon}}}</div>
                 <a class="mygama-edq-misseslink" href="{{edqmissesurl}}">
                     {{edqmisseslabel}}
                     {{#hasedqmisses}}<span class="mygama-section-count">({{edqmissescount}})</span>{{/hasedqmisses}}
@@ -85,7 +85,15 @@
     {{#haschart}}
     <div class="mygama-chartcard">
         <h2>{{charttitle}}</h2>
-        {{{chart}}}
+        {{#completionbars}}
+        <div class="mygama-minibar-row">
+            <span class="mygama-minibar-label">{{label}}</span>
+            <div class="mygama-minibar-track">
+                <div class="mygama-minibar-fill" style="width: {{pct}}%; background: {{accent}};"></div>
+            </div>
+            <span class="mygama-minibar-value">{{pct}}%</span>
+        </div>
+        {{/completionbars}}
     </div>
     {{/haschart}}
 

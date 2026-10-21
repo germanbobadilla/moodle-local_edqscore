@@ -38,7 +38,7 @@
             <select name="groupid" class="mygama-group-select" onchange="this.form.submit()" aria-label="{{selectgrouplabel}}">
                 <option value="0" {{#allgroupsselected}}selected{{/allgroupsselected}}>{{allgroupslabel}}</option>
                 {{#groups}}
-                <option value="{{id}}" {{#selected}}selected{{/selected}}>{{name}}</option>
+                <option value="{{id}}" {{#selected}}selected{{/selected}}>{{{name}}}</option>
                 {{/groups}}
             </select>
             <noscript><button type="submit" class="btn btn-sm btn-outline-secondary">{{golabel}}</button></noscript>

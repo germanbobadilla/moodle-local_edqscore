@@ -26,7 +26,6 @@ namespace local_edqscore\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_page implements \renderable, \templatable {
-
     /** @var \stdClass the course */
     protected $course;
 
@@ -135,25 +134,28 @@ class course_page implements \renderable, \templatable {
         $totaloverdue = $assignoverdue + $forumoverdue + $quizoverdue;
         $totalactivities = count($this->assignments) + $forumcount + count($this->quizzes);
 
-        $chart = null;
+        // A compact set of inline progress bars rather than a full Chart.js render — three values
+        // don't need axes, gridlines and a legend; a slim labelled bar per module reads just as
+        // clearly in a fraction of the vertical space.
+        $completionbars = [];
         if ($totalactivities > 0) {
-            $chartobj = new \core\chart_bar();
-            $chartobj->set_horizontal(true);
-            $series = new \core\chart_series(
-                get_string('chartcompletiontitle', 'local_edqscore'),
-                [$assigngradedavg, $forumparticipationavg, $quizgradedavg]
-            );
-            $series->set_colors(['#2f6f4e', '#2b6693', '#93650f']);
-            $chartobj->add_series($series);
-            $chartobj->set_labels([
-                get_string('sectionassignments', 'local_edqscore'),
-                get_string('sectionforums', 'local_edqscore'),
-                get_string('sectionquizzes', 'local_edqscore'),
-            ]);
-            $yaxis = $chartobj->get_yaxis(0, true);
-            $yaxis->set_max(100);
-            $yaxis->set_min(0);
-            $chart = $output->render($chartobj);
+            $completionbars = [
+                [
+                    'label' => get_string('sectionassignments', 'local_edqscore'),
+                    'pct' => $assigngradedavg,
+                    'accent' => 'var(--edq-accent-assign)',
+                ],
+                [
+                    'label' => get_string('sectionforums', 'local_edqscore'),
+                    'pct' => $forumparticipationavg,
+                    'accent' => 'var(--edq-accent-forum)',
+                ],
+                [
+                    'label' => get_string('sectionquizzes', 'local_edqscore'),
+                    'pct' => $quizgradedavg,
+                    'accent' => 'var(--edq-accent-quiz)',
+                ],
+            ];
         }
 
         return [
@@ -162,7 +164,7 @@ class course_page implements \renderable, \templatable {
             'userpicture' => $output->user_picture($this->user, ['size' => 56, 'class' => 'userpicture']),
             'username' => fullname($this->user),
             'toolbar' => helper::export_toolbar($this->pageurl, $courseid, $this->scope, $this->cansettings),
-            'edqdesc' => get_string('edqdesc', 'local_edqscore'),
+            'edqhelpicon' => $output->help_icon('edq', 'local_edqscore'),
             'edqmisseslabel' => get_string('edqmisses', 'local_edqscore'),
             'edqmissesurl' => (new \moodle_url('/local/edqscore/edqmisses.php', ['id' => $courseid] + $groupparam))->out(false),
             'edqmissescount' => count($this->edq['misses']),
@@ -184,9 +186,9 @@ class course_page implements \renderable, \templatable {
             'totaloverdue' => $totaloverdue,
             'hasoverdue' => $totaloverdue > 0,
             'overduelabel' => get_string('kpioverdue', 'local_edqscore'),
-            'haschart' => $chart !== null,
+            'haschart' => !empty($completionbars),
             'charttitle' => get_string('chartcompletiontitle', 'local_edqscore'),
-            'chart' => $chart,
+            'completionbars' => $completionbars,
             'assignurl' => (new \moodle_url('/local/edqscore/assignments.php', ['id' => $courseid] + $groupparam))->out(false),
             'assigntitle' => get_string('sectionassignments', 'local_edqscore'),
             'assigncount' => count($this->assignments),

@@ -52,10 +52,10 @@
                     <div class="mygama-card-title">
                         {{#url}}
                         <a class="mygama-link" href="{{url}}" onclick="event.stopPropagation()">
-                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{name}}
+                            <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{{name}}}
                         </a>
                         {{/url}}
-                        {{^url}}{{name}}{{/url}}
+                        {{^url}}{{{name}}}{{/url}}
                     </div>
                     <div class="mygama-card-sub">
                         {{duelabel}}: {{#duedate}}{{duedate}}{{/duedate}}{{^duedate}}&mdash;{{/duedate}}

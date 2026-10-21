@@ -36,7 +36,6 @@ require_once(__DIR__ . '/../lib.php');
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class analytics {
-
     /**
      * One card per assignment: submitted/graded counts and an overdue
      * count for the summary, plus a ->students list (submission date,
@@ -49,22 +48,33 @@ class analytics {
      * @param int $latehours
      * @return \stdClass[]
      */
-    public static function get_assignments(int $courseid, array $userids, int $thresholdhours,
-            string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS): array {
+    public static function get_assignments(
+        int $courseid,
+        array $userids,
+        int $thresholdhours,
+        string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS
+    ): array {
         global $DB;
 
-        $assignments = $DB->get_records('assign', ['course' => $courseid], 'duedate ASC, name ASC',
-            'id, name, duedate, cutoffdate, grade');
+        $assignments = $DB->get_records(
+            'assign',
+            ['course' => $courseid],
+            'duedate ASC, name ASC',
+            'id, name, duedate, cutoffdate, grade'
+        );
         if (!$assignments) {
             return [];
         }
 
-        $cms = $DB->get_records_sql("
+        $cms = $DB->get_records_sql(
+            "
                 SELECT cm.instance, cm.id
                   FROM {course_modules} cm
                   JOIN {modules} m ON m.id = cm.module
                  WHERE cm.course = :courseid AND m.name = 'assign'",
-            ['courseid' => $courseid]);
+            ['courseid' => $courseid]
+        );
 
         $total = count($userids);
         foreach ($assignments as $a) {
@@ -82,18 +92,25 @@ class analytics {
             return array_values($assignments);
         }
 
-        $students = $DB->get_records_list('user', 'id', $userids, 'lastname ASC, firstname ASC',
-            'id, firstname, lastname');
+        $students = $DB->get_records_list(
+            'user',
+            'id',
+            $userids,
+            'lastname ASC, firstname ASC',
+            'id, firstname, lastname'
+        );
 
         [$usql, $uparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED, 'u');
         [$asql, $aparams] = $DB->get_in_or_equal(array_keys($assignments), SQL_PARAMS_NAMED, 'a');
 
         $submissionmap = [];
-        $submissions = $DB->get_records_sql("
+        $submissions = $DB->get_records_sql(
+            "
                 SELECT s.id, s.assignment, s.userid, s.timemodified, s.status
                   FROM {assign_submission} s
                  WHERE s.assignment $asql AND s.latest = 1 AND s.userid $usql",
-            array_merge($aparams, $uparams));
+            array_merge($aparams, $uparams)
+        );
         foreach ($submissions as $s) {
             $submissionmap[$s->assignment . ':' . $s->userid] = $s;
         }
@@ -101,12 +118,14 @@ class analytics {
         // Order by attempt number so, if an assignment allows multiple
         // attempts, the highest-attempt grade is what survives in the map.
         $grademap = [];
-        $grades = $DB->get_records_sql("
+        $grades = $DB->get_records_sql(
+            "
                 SELECT g.id, g.assignment, g.userid, g.grade, g.timemodified, g.attemptnumber
                   FROM {assign_grades} g
                  WHERE g.assignment $asql AND g.userid $usql
               ORDER BY g.attemptnumber ASC",
-            array_merge($aparams, $uparams));
+            array_merge($aparams, $uparams)
+        );
         foreach ($grades as $g) {
             if ($g->grade === null || $g->grade < 0) {
                 continue;
@@ -228,8 +247,14 @@ class analytics {
      * @param int $latehours
      * @return \stdClass[]
      */
-    public static function get_forums(int $courseid, array $userids, array $groupids, int $thresholdhours,
-            string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS): array {
+    public static function get_forums(
+        int $courseid,
+        array $userids,
+        array $groupids,
+        int $thresholdhours,
+        string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS
+    ): array {
         global $DB;
 
         $forums = $DB->get_records('forum', ['course' => $courseid], 'name ASC', 'id, name, assessed, duedate');
@@ -237,12 +262,14 @@ class analytics {
             return [];
         }
 
-        $cms = $DB->get_records_sql("
+        $cms = $DB->get_records_sql(
+            "
                 SELECT cm.instance, cm.id
                   FROM {course_modules} cm
                   JOIN {modules} m ON m.id = cm.module
                  WHERE cm.course = :courseid AND m.name = 'forum'",
-            ['courseid' => $courseid]);
+            ['courseid' => $courseid]
+        );
 
         $total = count($userids);
         foreach ($forums as $f) {
@@ -261,12 +288,14 @@ class analytics {
 
         $context = \context_course::instance($courseid);
         [$rsql, $rparams] = $DB->get_in_or_equal(['teacher', 'editingteacher'], SQL_PARAMS_NAMED, 'r');
-        $instructorids = $DB->get_fieldset_sql("
+        $instructorids = $DB->get_fieldset_sql(
+            "
                 SELECT DISTINCT ra.userid
                   FROM {role_assignments} ra
                   JOIN {role} r ON r.id = ra.roleid
                  WHERE ra.contextid = :contextid AND r.shortname $rsql",
-            array_merge(['contextid' => $context->id], $rparams));
+            array_merge(['contextid' => $context->id], $rparams)
+        );
         $instructorset = array_flip($instructorids);
 
         [$fsql, $fparams] = $DB->get_in_or_equal(array_keys($forums), SQL_PARAMS_NAMED, 'f');
@@ -279,11 +308,13 @@ class analytics {
             $groupparams = $gparams;
         }
 
-        $discussions = $DB->get_records_sql("
+        $discussions = $DB->get_records_sql(
+            "
                 SELECT d.id, d.forum, d.name, d.groupid, d.userid AS starterid
                   FROM {forum_discussions} d
                  WHERE d.forum $fsql $groupfilter",
-            array_merge($fparams, $groupparams));
+            array_merge($fparams, $groupparams)
+        );
 
         foreach ($discussions as $d) {
             if (isset($forums[$d->forum])) {
@@ -310,11 +341,13 @@ class analytics {
             }
             if (!empty($modulecontextids)) {
                 [$mcsql, $mcparams] = $DB->get_in_or_equal($modulecontextids, SQL_PARAMS_NAMED, 'mc');
-                $ratedrows = $DB->get_records_sql("
+                $ratedrows = $DB->get_records_sql(
+                    "
                         SELECT id, itemid, timecreated
                           FROM {rating}
                          WHERE component = 'mod_forum' AND ratingarea = 'post' AND contextid $mcsql",
-                    $mcparams);
+                    $mcparams
+                );
                 foreach ($ratedrows as $r) {
                     if (!isset($ratingtimes[$r->itemid]) || $r->timecreated < $ratingtimes[$r->itemid]) {
                         $ratingtimes[$r->itemid] = (int) $r->timecreated;
@@ -324,12 +357,14 @@ class analytics {
         }
 
         [$dsql, $dparams] = $DB->get_in_or_equal(array_keys($discussions), SQL_PARAMS_NAMED, 'd');
-        $allposts = $DB->get_records_sql("
+        $allposts = $DB->get_records_sql(
+            "
                 SELECT p.id, p.discussion, p.userid, p.created
                   FROM {forum_posts} p
                  WHERE p.discussion $dsql AND p.deleted = 0
               ORDER BY p.created ASC",
-            $dparams);
+            $dparams
+        );
 
         $studentset = array_flip($userids);
         $now = time();
@@ -373,8 +408,10 @@ class analytics {
                     if ($anchor !== null) {
                         $ratedon = $ratingtimes[$p->id] ?? null;
                         $status = local_edqscore_grading_status($ratedon, $anchor, $thresholdhours, $latehours, $now);
-                        if (!isset($discussionstatus[$p->discussion])
-                                || $statusrank[$status] > $statusrank[$discussionstatus[$p->discussion]]) {
+                        if (
+                            !isset($discussionstatus[$p->discussion])
+                                || $statusrank[$status] > $statusrank[$discussionstatus[$p->discussion]]
+                        ) {
                             $discussionstatus[$p->discussion] = $status;
                         }
                     }
@@ -473,8 +510,13 @@ class analytics {
      * @param int $latehours
      * @return \stdClass[]
      */
-    public static function get_quizzes(int $courseid, array $userids, int $thresholdhours = LOCAL_EDQSCORE_DEFAULT_QUIZ_HOURS,
-            string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION, int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS): array {
+    public static function get_quizzes(
+        int $courseid,
+        array $userids,
+        int $thresholdhours = LOCAL_EDQSCORE_DEFAULT_QUIZ_HOURS,
+        string $countfrom = LOCAL_EDQSCORE_COUNTFROM_SUBMISSION,
+        int $latehours = LOCAL_EDQSCORE_DEFAULT_LATE_HOURS
+    ): array {
         global $DB;
 
         $quizzes = $DB->get_records('quiz', ['course' => $courseid], 'name ASC', 'id, name, grade, timeclose');
@@ -482,12 +524,14 @@ class analytics {
             return [];
         }
 
-        $cms = $DB->get_records_sql("
+        $cms = $DB->get_records_sql(
+            "
                 SELECT cm.instance, cm.id
                   FROM {course_modules} cm
                   JOIN {modules} m ON m.id = cm.module
                  WHERE cm.course = :courseid AND m.name = 'quiz'",
-            ['courseid' => $courseid]);
+            ['courseid' => $courseid]
+        );
 
         $total = count($userids);
         foreach ($quizzes as $q) {
@@ -531,8 +575,13 @@ class analytics {
             return array_values($quizzes);
         }
 
-        $students = $DB->get_records_list('user', 'id', $userids, 'lastname ASC, firstname ASC',
-            'id, firstname, lastname');
+        $students = $DB->get_records_list(
+            'user',
+            'id',
+            $userids,
+            'lastname ASC, firstname ASC',
+            'id, firstname, lastname'
+        );
 
         [$usql, $uparams] = $DB->get_in_or_equal($userids, SQL_PARAMS_NAMED, 'u');
         [$qsql, $qparams] = $DB->get_in_or_equal(array_keys($quizzes), SQL_PARAMS_NAMED, 'q');
@@ -543,31 +592,37 @@ class analytics {
         // are guaranteed unique per row, e.g. a group with overrides on two
         // quizzes joins to the same group-member row twice.
         $overridden = [];
-        $useroverrides = $DB->get_recordset_sql("
+        $useroverrides = $DB->get_recordset_sql(
+            "
                 SELECT qo.quiz, qo.userid
                   FROM {quiz_overrides} qo
                  WHERE qo.quiz $qsql AND qo.userid IS NOT NULL AND qo.userid $usql",
-            array_merge($qparams, $uparams));
+            array_merge($qparams, $uparams)
+        );
         foreach ($useroverrides as $o) {
             $overridden[$o->quiz . ':' . $o->userid] = true;
         }
         $useroverrides->close();
-        $groupoverrides = $DB->get_recordset_sql("
+        $groupoverrides = $DB->get_recordset_sql(
+            "
                 SELECT qo.quiz, gm.userid
                   FROM {quiz_overrides} qo
                   JOIN {groups_members} gm ON gm.groupid = qo.groupid
                  WHERE qo.quiz $qsql AND qo.groupid IS NOT NULL AND gm.userid $usql",
-            array_merge($qparams, $uparams));
+            array_merge($qparams, $uparams)
+        );
         foreach ($groupoverrides as $o) {
             $overridden[$o->quiz . ':' . $o->userid] = true;
         }
         $groupoverrides->close();
 
-        $attemptrows = $DB->get_records_sql("
+        $attemptrows = $DB->get_records_sql(
+            "
                 SELECT a.id, a.quiz, a.userid, a.timefinish, a.uniqueid
                   FROM {quiz_attempts} a
                  WHERE a.quiz $qsql AND a.state = :state AND a.userid $usql",
-            array_merge($qparams, $uparams, ['state' => 'finished']));
+            array_merge($qparams, $uparams, ['state' => 'finished'])
+        );
 
         $attemptsbykey = [];
         foreach ($attemptrows as $row) {
@@ -640,11 +695,13 @@ class analytics {
         }
 
         $gradesbykey = [];
-        $grades = $DB->get_records_sql("
+        $grades = $DB->get_records_sql(
+            "
                 SELECT g.id, g.quiz, g.userid, g.grade
                   FROM {quiz_grades} g
                  WHERE g.quiz $qsql AND g.userid $usql",
-            array_merge($qparams, $uparams));
+            array_merge($qparams, $uparams)
+        );
         foreach ($grades as $g) {
             $gradesbykey[$g->quiz . ':' . $g->userid] = $g;
         }

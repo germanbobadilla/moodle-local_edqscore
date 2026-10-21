@@ -24,7 +24,6 @@ namespace local_edqscore\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class edqmisses_page implements \renderable, \templatable {
-
     /** @var \stdClass the course */
     protected $course;
 
@@ -87,7 +86,7 @@ class edqmisses_page implements \renderable, \templatable {
             'scopenone' => $this->scope['scope'] === 'none',
             'scopenonemessage' => get_string('scopenone', 'local_edqscore'),
             'edqmissestitle' => get_string('edqmisses', 'local_edqscore'),
-            'edqdesc' => get_string('edqdesc', 'local_edqscore'),
+            'edqhelpicon' => $output->help_icon('edq', 'local_edqscore'),
             'edqlabel' => get_string('edq', 'local_edqscore'),
             'edqscore' => $this->edq['score'],
             'edqcolor' => $this->edq['color'],

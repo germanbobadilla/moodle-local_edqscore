@@ -126,6 +126,16 @@
     font-size: 1.05rem;
     color: var(--edq-hero-text);
 }
+.mygama-edq-name .help-icon {
+    padding: 0;
+    margin: 0 0 0 .1rem;
+    vertical-align: middle;
+}
+.mygama-edq-name .help-icon img {
+    width: 14px;
+    height: 14px;
+    opacity: .9;
+}
 .mygama-edq-context {
     font-size: .8rem;
     color: var(--edq-hero-text-muted);
@@ -179,6 +189,25 @@
     color: var(--edq-hero-text-muted);
     max-width: 12rem;
     text-align: right;
+}
+.mygama-edq-labelrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .3rem;
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--edq-hero-text);
+}
+.mygama-edq-labelrow .help-icon {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+.mygama-edq-labelrow .help-icon img {
+    width: 14px;
+    height: 14px;
+    opacity: .9;
 }
 .mygama-edq-misseslink {
     display: flex;
@@ -507,6 +536,39 @@ a.mygama-link:hover {
     font-weight: 700;
     color: var(--edq-text);
     margin-bottom: .75rem;
+}
+.mygama-minibar-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr 3rem;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: .6rem;
+}
+.mygama-minibar-row:last-child {
+    margin-bottom: 0;
+}
+.mygama-minibar-label {
+    font-size: .82rem;
+    color: var(--edq-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mygama-minibar-track {
+    background: var(--edq-surface-sunken);
+    border-radius: 50rem;
+    height: .5rem;
+    overflow: hidden;
+}
+.mygama-minibar-fill {
+    height: 100%;
+    border-radius: 50rem;
+}
+.mygama-minibar-value {
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--edq-text);
+    text-align: right;
 }
 
 .mygama-summarygrid {
