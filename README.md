@@ -16,9 +16,9 @@ course for editing teachers/managers), it tracks:
 * **Forums** — post/reply turnaround, instructor participation.
 * **Quizzes** — grading turnaround on attempts containing essay questions.
 
-These roll up into a single **EdQ score**, plus a "What's affecting your
-EdQ score" page listing the specific misses (not graded, graded late, no
-feedback, no instructor reply) behind it.
+These roll up into a single **EdQ score**, plus a "Needs your attention"
+page listing the specific misses (not graded, graded late, no feedback, no
+instructor reply) behind it.
 
 Grading-turnaround thresholds (how many hours before an item counts as
 "late" or "overdue") are configurable site-wide, with optional per-course
@@ -32,7 +32,10 @@ submissions from the last 24 hours.
 
 ## Requirements
 
-* Moodle 4.5 or later (`$plugin->requires = 2024100700`).
+* Fully supported and tested on **Moodle 4.5 LTS, 5.0, 5.2 and 5.3 LTS**.
+* Also downloadable and installable on **Moodle 4.0 and 4.2**
+  (`$plugin->requires = 2022041900`, Moodle 4.0's base version — the floor
+  the quiz essay-detection query's question-bank schema requires).
 
 ## Installation
 
@@ -70,6 +73,47 @@ Define roles* and grant it `local/edqscore:view`, `local/edqscore:manage`,
 `local/edqscore:configurecourse`, and (to see across all groups)
 `moodle/site:accessallgroups`. The plugin doesn't create this role for
 you, since not every site organises staff this way.
+
+## Settings
+
+Site-wide defaults live under *Site administration > Plugins > Local
+plugins > EdQ Score* (`local/edqscore:manage`). Every threshold below can
+also be overridden per course from the dashboard's *Course settings* page
+(`local/edqscore:configurecourse`) — a course override replaces the site
+default for that course only; leaving a course-level field blank falls
+back to the site default.
+
+**General**
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Show ungraded items | Off | Items with no grading configured at all (e.g. a general discussion forum, or an assignment/quiz with no grade) are hidden from the board by default, so instructors only see what actually needs grading. |
+| Include feedback on assignments for the EdQ | On | Counts whether feedback text was left on each *submitted* assignment as its own trackable/on-time pair in the EdQ score, alongside grading turnaround. |
+| Include manually graded quizzes in the EdQ | On | Counts grading turnaround on quizzes containing an essay question towards the EdQ score. Fully auto-graded quizzes never count, regardless of this setting — there's no manual grading action to measure. |
+
+**Assignments / Forums / Quizzes** (one group per activity type)
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| *(Activity)* grading hours | 48h (assignments/quizzes), 72h (forums) | Hours an item can go ungraded/unreplied-to before it stops counting as "On time". |
+| *(Activity)* considered late after | 120h | Hours past the grading-hours threshold before an item flips from "Late" to "Overdue" — applies even to work that's since been handled; grading it late doesn't cap it back at "Late". |
+| Count *(activity)* turnaround from | Submission date | The anchor the turnaround clock starts from: submission date, due date, or due date falling back to submission date if none is set. Assignments additionally offer the cut-off date (the hard deadline after which Moodle refuses further submissions), with its own fallback-to-due-date option. |
+
+Assignments also have **Only show submitted work** (default off): hides
+students who haven't submitted from the detail list (they're still
+counted in the totals). Only takes effect when assignments are tracked by
+submission date — when tracking by due date, seeing who hasn't submitted
+yet is the point, so the setting is ignored (but kept, and re-applies if
+you switch back). Quizzes also have **Show only manually graded quizzes**
+(default on): hides fully auto-graded quizzes from the board, since
+there's nothing for the instructor to do on those.
+
+**Notifications**
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Send EdQ Score digest | On | Daily notification summarising an instructor's current EdQ score and top misses, per course. |
+| Send assignment submission digest | On | Daily notification listing new assignment submissions from the last 24 hours. |
 
 ## Capabilities
 
