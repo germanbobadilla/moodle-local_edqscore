@@ -32,10 +32,7 @@ submissions from the last 24 hours.
 
 ## Requirements
 
-* Fully supported and tested on **Moodle 4.5 LTS, 5.0, 5.2 and 5.3 LTS**.
-* Also downloadable and installable on **Moodle 4.0 and 4.2**
-  (`$plugin->requires = 2022041900`, Moodle 4.0's base version — the floor
-  the quiz essay-detection query's question-bank schema requires).
+* Moodle 4.5 LTS to 5.3 LTS.
 
 ## Installation
 

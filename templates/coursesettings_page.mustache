@@ -48,8 +48,8 @@
 
         {{#sections}}
         <div class="mygama-settings-section">
-            <button type="button" class="mygama-settings-sectionhead" data-bs-toggle="collapse"
-                data-bs-target="#{{id}}" aria-expanded="{{#expanded}}true{{/expanded}}{{^expanded}}false{{/expanded}}" aria-controls="{{id}}">
+            <button type="button" class="mygama-settings-sectionhead" data-toggle="collapse" data-bs-toggle="collapse"
+                data-target="#{{id}}" data-bs-target="#{{id}}" aria-expanded="{{#expanded}}true{{/expanded}}{{^expanded}}false{{/expanded}}" aria-controls="{{id}}">
                 <i class="icon fa fa-chevron-down fa-fw mygama-inline-chevron" aria-hidden="true"></i>
                 <h3>{{title}}</h3>
             </button>

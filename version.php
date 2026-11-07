@@ -17,22 +17,9 @@
 /**
  * EdQ Score teaching analytics — version information.
  *
- * Fully supported and tested on Moodle 4.5 LTS, 5.0, 5.2 and 5.3 LTS. $plugin->requires is
- * set to Moodle 4.0.0's base version, one notch lower than that supported range, so the
- * plugin is also downloadable and installable on 4.0 and 4.2 — the codebase doesn't need
- * anything newer than that floor:
- * - The question-bank schema the quiz essay-detection query reads (question_bank_entries,
- *   question_versions, question_references) was introduced in Moodle 4.0 itself (see
- *   question/upgrade.txt's "=== 4.0 ===" section) — this is the hard floor, nothing lower
- *   is possible.
- * - renderable/templatable + Mustache rendering, admin_settingpage::hide_if(), and
- *   \core\output\notification have all been stable since well before 4.0.
- * - The completion-rate card is a handful of plain CSS progress bars, not \core\chart_bar,
- *   so there's no Chart.js/AMD dependency to version-gate at all.
- * - The codebase avoids any PHP 8.0+ syntax (str_contains()/str_starts_with()/
- *   str_ends_with(), the nullsafe operator, match(), constructor property promotion,
- *   named arguments) as well as PHP 8.1+ syntax (enums, readonly properties), since 4.0's
- *   floor is PHP 7.3.
+ * Supported and tested on Moodle 4.5 LTS to 5.3 LTS. Collapsible sections carry both the
+ * Bootstrap 4 (data-toggle) and Bootstrap 5 (data-bs-toggle) attributes, because 4.5 uses
+ * Bootstrap 4 and 5.0 onwards uses Bootstrap 5.
  *
  * @package    local_edqscore
  * @copyright  2026 German Bobadilla, MA
@@ -41,8 +28,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026110700;
-$plugin->requires  = 2022041900;
+$plugin->version   = 2026110701;
+$plugin->requires  = 2024100700;
+$plugin->supported = [405, 503];
 $plugin->component = 'local_edqscore';
 $plugin->maturity  = MATURITY_ALPHA;
-$plugin->release   = '0.5.1';
+$plugin->release   = '0.5.2';
