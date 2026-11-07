@@ -122,14 +122,16 @@
 
     {{#forums}}
     <div class="card mygama-item-card mb-2">
-        <div class="mygama-card-header" role="button" tabindex="0" data-bs-toggle="collapse"
-             data-bs-target="#{{collapseid}}" aria-expanded="false" aria-controls="{{collapseid}}">
+        <div class="mygama-card-header">
+            <button type="button" class="mygama-card-toggle" data-bs-toggle="collapse"
+                    data-bs-target="#{{collapseid}}" aria-expanded="false" aria-controls="{{collapseid}}"
+                    aria-labelledby="{{collapseid}}-title"></button>
             <div class="mygama-card-main">
                 <span class="mygama-chevron"><i class="icon fa fa-chevron-right fa-fw" aria-hidden="true"></i></span>
                 <div>
-                    <div class="mygama-card-title">
+                    <div class="mygama-card-title" id="{{collapseid}}-title">
                         {{#url}}
-                        <a class="mygama-link" href="{{url}}" onclick="event.stopPropagation()">
+                        <a class="mygama-link" href="{{url}}">
                             <i class="icon fa fa-arrow-up-right-from-square fa-xs" aria-hidden="true"></i> {{{name}}}
                         </a>
                         {{/url}}

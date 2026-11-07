@@ -322,6 +322,7 @@
     overflow: hidden;
 }
 .mygama-card-header {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -334,6 +335,29 @@
     text-align: left;
     color: var(--edq-text);
 }
+/* A real button covers the header so the whole header toggles the card, with the
+   activity link raised above it. Links can't sit inside a button. */
+.mygama-card-toggle {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: inherit;
+    cursor: pointer;
+}
+
+.mygama-card-toggle:focus-visible {
+    outline-offset: -2px;
+}
+
+.mygama-card-header .mygama-link {
+    position: relative;
+    z-index: 2;
+}
+
 .mygama-card-header:hover {
     background-color: var(--edq-surface-sunken);
 }
@@ -378,7 +402,7 @@ a.mygama-link:hover {
     flex-shrink: 0;
     color: var(--edq-text-muted);
 }
-.mygama-card-header[aria-expanded="true"] .mygama-chevron {
+.mygama-card-toggle[aria-expanded="true"] ~ * .mygama-chevron {
     transform: rotate(90deg);
 }
 .mygama-card-detail table {
