@@ -41,8 +41,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026101700;
+$plugin->version   = 2026110700;
 $plugin->requires  = 2022041900;
 $plugin->component = 'local_edqscore';
 $plugin->maturity  = MATURITY_ALPHA;
-$plugin->release   = '0.5';
+$plugin->release   = '0.5.1';

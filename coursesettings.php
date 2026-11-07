@@ -50,41 +50,28 @@ $existing = $DB->get_record('local_edqscore_course_settings', ['courseid' => $co
 if (data_submitted()) {
     require_sesskey();
 
-    $forumraw = trim(optional_param('forumgradinghours', '', PARAM_RAW));
-    $assignraw = trim(optional_param('assigngradinghours', '', PARAM_RAW));
-    $showungradedraw = optional_param('showungraded', '', PARAM_RAW);
     $assigncountfromraw = optional_param('assigncountfrom', '', PARAM_ALPHANUMEXT);
     $forumcountfromraw = optional_param('forumcountfrom', '', PARAM_ALPHANUMEXT);
-    $onlyshowsubmittedraw = optional_param('onlyshowsubmitted', '', PARAM_RAW);
-    $quizraw = trim(optional_param('quizgradinghours', '', PARAM_RAW));
     $quizcountfromraw = optional_param('quizcountfrom', '', PARAM_ALPHANUMEXT);
-    $quizonlymanualraw = optional_param('quizonlymanual', '', PARAM_RAW);
-    $edqincludefeedbackraw = optional_param('edqincludefeedback', '', PARAM_RAW);
-    $edqincludequizmanualraw = optional_param('edqincludequizmanual', '', PARAM_RAW);
-    $assignlateraw = trim(optional_param('assignlatehours', '', PARAM_RAW));
-    $forumlateraw = trim(optional_param('forumlatehours', '', PARAM_RAW));
-    $quizlateraw = trim(optional_param('quizlatehours', '', PARAM_RAW));
-    $edqscoredigestenabledraw = optional_param('edqscoredigestenabled', '', PARAM_RAW);
-    $submissiondigestenabledraw = optional_param('submissiondigestenabled', '', PARAM_RAW);
 
     $record = new stdClass();
     $record->courseid = $courseid;
-    $record->forumgradinghours = ($forumraw === '') ? null : max(1, (int) $forumraw);
-    $record->assigngradinghours = ($assignraw === '') ? null : max(1, (int) $assignraw);
-    $record->showungraded = ($showungradedraw === '') ? null : (int) $showungradedraw;
+    $record->forumgradinghours = local_edqscore_optional_hours('forumgradinghours');
+    $record->assigngradinghours = local_edqscore_optional_hours('assigngradinghours');
+    $record->showungraded = local_edqscore_optional_flag('showungraded');
     $record->assigncountfrom = ($assigncountfromraw === '') ? null : $assigncountfromraw;
     $record->forumcountfrom = ($forumcountfromraw === '') ? null : $forumcountfromraw;
-    $record->onlyshowsubmitted = ($onlyshowsubmittedraw === '') ? null : (int) $onlyshowsubmittedraw;
-    $record->quizgradinghours = ($quizraw === '') ? null : max(1, (int) $quizraw);
+    $record->onlyshowsubmitted = local_edqscore_optional_flag('onlyshowsubmitted');
+    $record->quizgradinghours = local_edqscore_optional_hours('quizgradinghours');
     $record->quizcountfrom = ($quizcountfromraw === '') ? null : $quizcountfromraw;
-    $record->quizonlymanual = ($quizonlymanualraw === '') ? null : (int) $quizonlymanualraw;
-    $record->edqincludefeedback = ($edqincludefeedbackraw === '') ? null : (int) $edqincludefeedbackraw;
-    $record->edqincludequizmanual = ($edqincludequizmanualraw === '') ? null : (int) $edqincludequizmanualraw;
-    $record->assignlatehours = ($assignlateraw === '') ? null : max(1, (int) $assignlateraw);
-    $record->forumlatehours = ($forumlateraw === '') ? null : max(1, (int) $forumlateraw);
-    $record->quizlatehours = ($quizlateraw === '') ? null : max(1, (int) $quizlateraw);
-    $record->edqscoredigestenabled = ($edqscoredigestenabledraw === '') ? null : (int) $edqscoredigestenabledraw;
-    $record->submissiondigestenabled = ($submissiondigestenabledraw === '') ? null : (int) $submissiondigestenabledraw;
+    $record->quizonlymanual = local_edqscore_optional_flag('quizonlymanual');
+    $record->edqincludefeedback = local_edqscore_optional_flag('edqincludefeedback');
+    $record->edqincludequizmanual = local_edqscore_optional_flag('edqincludequizmanual');
+    $record->assignlatehours = local_edqscore_optional_hours('assignlatehours');
+    $record->forumlatehours = local_edqscore_optional_hours('forumlatehours');
+    $record->quizlatehours = local_edqscore_optional_hours('quizlatehours');
+    $record->edqscoredigestenabled = local_edqscore_optional_flag('edqscoredigestenabled');
+    $record->submissiondigestenabled = local_edqscore_optional_flag('submissiondigestenabled');
     $record->timemodified = time();
     $record->usermodified = $USER->id;
 

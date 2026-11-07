@@ -566,3 +566,31 @@ function local_edqscore_extend_navigation_course($navigation, $course, $context)
     );
     $navigation->add_node($node);
 }
+
+/**
+ * Read an optional hours field from the course settings form.
+ *
+ * Left empty, the field means "use the site default". PARAM_INT turns an empty value into 0, and
+ * hours start at 1, so anything below that means the same.
+ *
+ * @param string $name The field name.
+ * @return int|null The hours, or null to use the site default.
+ */
+function local_edqscore_optional_hours(string $name): ?int {
+    $hours = optional_param($name, 0, PARAM_INT);
+    return $hours >= 1 ? $hours : null;
+}
+
+/**
+ * Read an optional on/off field from the course settings form.
+ *
+ * These have three states, because empty means "use the site default". PARAM_BOOL can't tell empty
+ * from off, so only the exact values the form sends are accepted.
+ *
+ * @param string $name The field name.
+ * @return int|null 1 or 0, or null to use the site default.
+ */
+function local_edqscore_optional_flag(string $name): ?int {
+    $value = optional_param($name, '', PARAM_ALPHANUMEXT);
+    return in_array($value, ['0', '1'], true) ? (int) $value : null;
+}
