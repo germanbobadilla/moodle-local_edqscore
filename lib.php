@@ -458,7 +458,7 @@ function local_edqscore_compute_edq(array $assignments, array $forums, array $qu
     // A trackable count of zero means nothing has happened yet in the course, not that
     // everything went perfectly: callers check 'trackable' before treating a 100 here as
     // an actual result (see course_page.php's 'hasedqdata').
-    $edqscore = $edqtrackable > 0 ? round(($edqontime / $edqtrackable) * 100) : 100;
+    $edqscore = $edqtrackable > 0 ? (int) round(($edqontime / $edqtrackable) * 100) : 100;
     if ($edqscore >= 90) {
         $edqcolor = 'var(--edq-hero-good)';
     } else if ($edqscore >= 70) {

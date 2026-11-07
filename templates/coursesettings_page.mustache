@@ -22,6 +22,18 @@
     amd/src/coursesettings.js for the expand-all and only-show-submitted
     toggle behaviour, and local_edqscore/combo_select for the dropdown
     widget's own behaviour.
+
+    Example context (json):
+    {
+        "backurl": "https://example.com/local/edqscore/course.php?id=2",
+        "coursefullname": "Example course",
+        "coursesettingsintro": "Override the site settings for this course.",
+        "expandalllabel": "Expand all",
+        "formurl": "https://example.com/local/edqscore/coursesettings.php?id=2",
+        "sesskey": "abc123",
+        "savechangeslabel": "Save changes",
+        "sections": []
+    }
 }}
 <div class="mygama-course-settings">
     <p><a href="{{backurl}}">&laquo; {{{coursefullname}}}</a></p>

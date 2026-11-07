@@ -212,6 +212,10 @@ final class lib_test extends \advanced_testcase {
 
     /**
      * Minimal thresholds object accepted by compute_edq() (it only reads these two flags).
+     *
+     * @param bool $includefeedback whether missing feedback counts against the score
+     * @param bool $includequizmanual whether manually graded quizzes count
+     * @return \stdClass
      */
     private function make_thresholds(bool $includefeedback = false, bool $includequizmanual = true): \stdClass {
         return (object) [
@@ -258,7 +262,7 @@ final class lib_test extends \advanced_testcase {
         $result = local_edqscore_compute_edq($assignments, [], [], $this->make_thresholds());
 
         $this->assertSame(10, $result['trackable']);
-        $this->assertSame(10, $result['ontime']);
+        $this->assertEquals(10, $result['ontime']);
         $this->assertSame(100, $result['score']);
     }
 

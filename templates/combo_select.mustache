@@ -26,6 +26,16 @@
     * name - form field name, also used as the element id
     * currentlabel - label of the currently selected option
     * options - list of {value, label, desc, selected}
+
+    Example context (json):
+    {
+        "name": "assigncountfrom",
+        "currentlabel": "Submission date",
+        "options": [
+            {"value": "submission", "label": "Submission date", "desc": "When the student submitted.", "selected": true},
+            {"value": "duedate", "label": "Due date", "desc": "When the assignment was due.", "selected": false}
+        ]
+    }
 }}
 <div class="mygama-combo" data-field="{{name}}">
     <button type="button" class="mygama-combo-trigger" aria-haspopup="listbox" aria-expanded="false">
