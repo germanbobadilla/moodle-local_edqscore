@@ -27,6 +27,61 @@
     * edqmissestitle, edqhelpicon, edqlabel, edqscore, edqcolor
     * misscount, hasmisses, misses - list of {item, url, student, reason, accent, status}
     * allontimemessage
+
+    Example context (json):
+    {
+        "backurl": "https://moodle.example.com/local/edqscore/course.php?id=2",
+        "pluginname": "EdQ Score",
+        "toolbar": {
+            "scopelabel": "All students",
+            "studentcount": 24,
+            "studentslabel": "students",
+            "pageurl": "https://moodle.example.com/local/edqscore/course.php",
+            "courseid": 2,
+            "hasgroups": true,
+            "allgroupsselected": false,
+            "allgroupslabel": "All groups",
+            "selectgrouplabel": "Filter by group",
+            "golabel": "Go",
+            "groups": [
+                {
+                    "id": 5,
+                    "name": "Group A",
+                    "selected": true
+                }
+            ],
+            "cansettings": true,
+            "settingsurl": "https://moodle.example.com/local/edqscore/coursesettings.php?id=2",
+            "coursesettingslabel": "Course settings"
+        },
+        "scopenone": false,
+        "scopenonemessage": "",
+        "edqmissestitle": "What is affecting your EdQ score",
+        "hasedqdata": true,
+        "edqlabel": "EdQ Score",
+        "edqscore": 82,
+        "edqcolor": "var(--edq-hero-warn)",
+        "edqnodatalabel": "No data yet",
+        "edqnodatadesc": "",
+        "hasmisses": true,
+        "misscount": 1,
+        "allontimemessage": "",
+        "misses": [
+            {
+                "accent": "var(--edq-accent-assign)",
+                "item": "Essay 1",
+                "url": "https://moodle.example.com/mod/assign/view.php?id=7",
+                "student": "Ana Perez",
+                "reason": "Graded late",
+                "status": {
+                    "label": "On time",
+                    "pillclass": "mygama-pill-good"
+                },
+                "label": "Late",
+                "pillclass": "mygama-pill-bad"
+            }
+        ]
+    }
 }}
 <div class="mygama-course-board">
     <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>

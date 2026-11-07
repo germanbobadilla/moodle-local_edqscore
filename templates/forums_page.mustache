@@ -19,6 +19,84 @@
 
     Forums detail page: one expandable card per forum, each with a
     per-discussion detail table.
+
+    Example context (json):
+    {
+        "backurl": "https://moodle.example.com/local/edqscore/course.php?id=2",
+        "pluginname": "EdQ Score",
+        "toolbar": {
+            "scopelabel": "All students",
+            "studentcount": 24,
+            "studentslabel": "students",
+            "pageurl": "https://moodle.example.com/local/edqscore/course.php",
+            "courseid": 2,
+            "hasgroups": true,
+            "allgroupsselected": false,
+            "allgroupslabel": "All groups",
+            "selectgrouplabel": "Filter by group",
+            "golabel": "Go",
+            "groups": [
+                {
+                    "id": 5,
+                    "name": "Group A",
+                    "selected": true
+                }
+            ],
+            "cansettings": true,
+            "settingsurl": "https://moodle.example.com/local/edqscore/coursesettings.php?id=2",
+            "coursesettingslabel": "Course settings"
+        },
+        "scopenone": false,
+        "scopenonemessage": "",
+        "hasforums": true,
+        "noactivitiesmessage": "",
+        "forums": [
+            {
+                "sectiontitle": "Week 1",
+                "sectioncount": 1,
+                "name": "Introductions",
+                "url": "https://moodle.example.com/mod/forum/view.php?id=8",
+                "collapseid": "edq-forum-8",
+                "participationpct": 75,
+                "participationlabel": "Participation",
+                "discussioncount": 1,
+                "discussionslabel": "discussions",
+                "postcount": 3,
+                "postslabel": "posts",
+                "instructorreplies": 1,
+                "instructorreplieslabel": "instructor replies",
+                "hasoverdue": false,
+                "overduecount": 0,
+                "overduechiplabel": "overdue",
+                "allcaughtuplabel": "All caught up",
+                "coldiscussionname": "Discussion",
+                "collastpost": "Last post",
+                "colwhen": "When",
+                "coloverdue": "Status",
+                "nodiscussions": false,
+                "nodiscussionsmessage": "",
+                "discussions": [
+                    {
+                        "name": "Say hello",
+                        "discussurl": "https://moodle.example.com/mod/forum/discuss.php?d=3",
+                        "postanchor": "https://moodle.example.com/mod/forum/discuss.php?d=3#p9",
+                        "bystudent": true,
+                        "byinstructor": false,
+                        "nopost": false,
+                        "nopostslabel": "No posts",
+                        "lastpostname": "Ana Perez",
+                        "studentslabel": "student",
+                        "instructorlabel": "Instructor",
+                        "lastposttime": "3 Nov 2026",
+                        "status": {
+                            "label": "On time",
+                            "pillclass": "mygama-pill-good"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 }}
 <div class="mygama-course-board">
     <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>

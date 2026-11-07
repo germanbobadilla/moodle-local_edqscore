@@ -20,6 +20,89 @@
     Quizzes detail page: one expandable card per quiz, each with a
     per-student detail table. Auto-graded and essay-containing quizzes show
     different rings/chips/columns.
+
+    Example context (json):
+    {
+        "backurl": "https://moodle.example.com/local/edqscore/course.php?id=2",
+        "pluginname": "EdQ Score",
+        "toolbar": {
+            "scopelabel": "All students",
+            "studentcount": 24,
+            "studentslabel": "students",
+            "pageurl": "https://moodle.example.com/local/edqscore/course.php",
+            "courseid": 2,
+            "hasgroups": true,
+            "allgroupsselected": false,
+            "allgroupslabel": "All groups",
+            "selectgrouplabel": "Filter by group",
+            "golabel": "Go",
+            "groups": [
+                {
+                    "id": 5,
+                    "name": "Group A",
+                    "selected": true
+                }
+            ],
+            "cansettings": true,
+            "settingsurl": "https://moodle.example.com/local/edqscore/coursesettings.php?id=2",
+            "coursesettingslabel": "Course settings"
+        },
+        "scopenone": false,
+        "scopenonemessage": "",
+        "hasquizzes": true,
+        "noactivitiesmessage": "",
+        "quizzes": [
+            {
+                "sectiontitle": "Week 1",
+                "sectioncount": 1,
+                "name": "Quiz 1",
+                "url": "https://moodle.example.com/mod/quiz/view.php?id=9",
+                "collapseid": "edq-quiz-9",
+                "hasessay": true,
+                "containsessaylabel": "Contains essay",
+                "autogradedlabel": "Auto-graded",
+                "gradedpct": 50,
+                "gradedlabel": "Graded",
+                "completedpct": 80,
+                "completedlabel": "Completed",
+                "avgscorepct": 78.5,
+                "avgscorelabel": "Average score",
+                "hasoverdue": false,
+                "overduecount": 0,
+                "overduechiplabel": "overdue",
+                "allcaughtuplabel": "All caught up",
+                "attemptslabel": "attempts",
+                "colstudent": "Student",
+                "colattempts": "Attempts",
+                "collastattempt": "Last attempt",
+                "colscore": "Score",
+                "coloverridden": "Overridden",
+                "colgradedon": "Graded on",
+                "coloverdue": "Status",
+                "colspan": 7,
+                "noneinscope": false,
+                "noneinscopemessage": "",
+                "students": [
+                    {
+                        "studentname": "Ana Perez",
+                        "reviewurl": "https://moodle.example.com/mod/quiz/review.php?attempt=4",
+                        "hasattempt": true,
+                        "attemptcount": 1,
+                        "lastattempttime": "4 Nov 2026",
+                        "scorepct": 85,
+                        "overridden": false,
+                        "overriddenyeslabel": "Yes",
+                        "overriddennolabel": "No",
+                        "gradedon": "5 Nov 2026",
+                        "status": {
+                            "label": "On time",
+                            "pillclass": "mygama-pill-good"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
 }}
 <div class="mygama-course-board">
     <p><a href="{{backurl}}">&laquo; {{pluginname}}</a></p>

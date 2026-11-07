@@ -20,6 +20,84 @@
     The per-course EdQ Score dashboard: teacher EdQ score, a completion-rate
     chart, and three clickable cards leading to the Assignments, Forums and
     Quizzes detail pages.
+
+    Example context (json):
+    {
+        "courseurl": "https://moodle.example.com/course/view.php?id=2",
+        "coursefullname": "English B2",
+        "username": "Alex Rivera",
+        "toolbar": {
+            "scopelabel": "All students",
+            "studentcount": 24,
+            "studentslabel": "students",
+            "pageurl": "https://moodle.example.com/local/edqscore/course.php",
+            "courseid": 2,
+            "hasgroups": true,
+            "allgroupsselected": false,
+            "allgroupslabel": "All groups",
+            "selectgrouplabel": "Filter by group",
+            "golabel": "Go",
+            "groups": [
+                {
+                    "id": 5,
+                    "name": "Group A",
+                    "selected": true
+                }
+            ],
+            "cansettings": true,
+            "settingsurl": "https://moodle.example.com/local/edqscore/coursesettings.php?id=2",
+            "coursesettingslabel": "Course settings"
+        },
+        "scopenone": false,
+        "scopenonemessage": "",
+        "hasedqdata": true,
+        "edqlabel": "EdQ Score",
+        "edqscore": 82,
+        "edqcolor": "var(--edq-hero-warn)",
+        "edqnodatalabel": "No data yet",
+        "hasedqmisses": true,
+        "edqmissescount": 1,
+        "edqmisseslabel": "items affecting your score",
+        "edqmissesurl": "https://moodle.example.com/local/edqscore/edqmisses.php?id=2",
+        "totalactivities": 3,
+        "activitieslabel": "activities",
+        "studentcount": 24,
+        "studentslabel": "students",
+        "hasoverdue": true,
+        "totaloverdue": 1,
+        "overduelabel": "overdue",
+        "overduechiplabel": "overdue",
+        "haschart": true,
+        "charttitle": "Completion",
+        "completionbars": [
+            {
+                "label": "Assignments",
+                "pct": 50,
+                "accent": "var(--edq-accent-assign)"
+            }
+        ],
+        "assignurl": "https://moodle.example.com/local/edqscore/assignments.php?id=2",
+        "assigntitle": "Assignments",
+        "assigncount": 1,
+        "assigngradedavg": 50,
+        "gradedlabel": "Graded",
+        "hasassignoverdue": true,
+        "assignoverdue": 1,
+        "forumurl": "https://moodle.example.com/local/edqscore/forums.php?id=2",
+        "forumtitle": "Forums",
+        "forumcount": 1,
+        "forumparticipationavg": 75,
+        "participationlabel": "Participation",
+        "hasforumoverdue": false,
+        "forumoverdue": 0,
+        "quizurl": "https://moodle.example.com/local/edqscore/quizzes.php?id=2",
+        "quiztitle": "Quizzes",
+        "quizcount": 1,
+        "quizgradedavg": 50,
+        "hasquizoverdue": false,
+        "quizoverdue": 0,
+        "viewdetailslabel": "View details"
+    }
 }}
 <div class="mygama-course-board">
     <p><a href="{{courseurl}}">&laquo; {{{coursefullname}}}</a></p>

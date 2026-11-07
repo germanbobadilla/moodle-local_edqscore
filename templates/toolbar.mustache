@@ -25,6 +25,30 @@
     * pageurl, courseid - group-filter form target
     * hasgroups, groups, allgroupsselected, allgroupslabel, selectgrouplabel, golabel
     * cansettings, settingsurl, coursesettingslabel
+
+    Example context (json):
+    {
+        "scopelabel": "All students",
+        "studentcount": 24,
+        "studentslabel": "students",
+        "pageurl": "https://moodle.example.com/local/edqscore/course.php",
+        "courseid": 2,
+        "hasgroups": true,
+        "allgroupsselected": false,
+        "allgroupslabel": "All groups",
+        "selectgrouplabel": "Filter by group",
+        "golabel": "Go",
+        "groups": [
+            {
+                "id": 5,
+                "name": "Group A",
+                "selected": true
+            }
+        ],
+        "cansettings": true,
+        "settingsurl": "https://moodle.example.com/local/edqscore/coursesettings.php?id=2",
+        "coursesettingslabel": "Course settings"
+    }
 }}
 <div class="mygama-toolbar">
     <div class="mygama-toolbar-info">
